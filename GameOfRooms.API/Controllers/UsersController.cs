@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using GameOfRooms.API.Data;
 using GameOfRooms.API.Dtos;
+using GameOfRooms.API.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameOfRooms.API.Controllers
 {
+    [ServiceFilter(typeof(LogTimeAgoActivity))]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
