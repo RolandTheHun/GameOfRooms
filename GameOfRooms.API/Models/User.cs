@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace GameOfRooms.API.Models
 {
+
+    public enum UserType
+    {
+        student, consultant, admin
+    }
     public class User
     {
         public int Id { get; set; }
@@ -20,5 +25,10 @@ namespace GameOfRooms.API.Models
         public string City { get; set; }
         public string Country { get; set; }
         public ICollection<Photo> Photos { get; set; }
+        public UserType UserType { get; set; }
+        public string FamilyName { get; set; }
+        public string FirstName { get; set; }
+        public string Email { get; set; }
+        public int TelephoneNumber { get; set; }
     }
 }

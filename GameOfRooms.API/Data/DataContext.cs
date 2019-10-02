@@ -9,6 +9,9 @@ namespace GameOfRooms.API.Data
         public DbSet<Value> Values { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
 
     }
 }
