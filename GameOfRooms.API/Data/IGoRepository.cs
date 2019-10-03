@@ -13,5 +13,9 @@ namespace GameOfRooms.API.Data
         Task<User> GetUser(int id);
         Task<IEnumerable<Room>> GetRooms();
         Task<Room> GetRoom(int id);
+        Task<IEnumerable<Rating>> GetRatings();
+        Task<Rating> GetRating(int id);
+        Task<IEnumerable<Reservation>> GetReservations();
+        Task<Reservation> GetReservation(int id);
     }
 }
