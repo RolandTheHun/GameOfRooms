@@ -1,5 +1,27 @@
-<div>
-  <ul *ngFor="let reservation of reservations">
-    <li>{{reservation.title}}</li>
-  </ul>
+<div class="reservations">
+  <app-reservation-detail *ngIf="selectedReservation" [reservation]="selectedReservation"></app-reservation-detail>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Date</th>
+        <th scope="col">Start</th>
+        <th scope="col">End</th>
+        <th scope="col">Capacity</th>
+        <th scope="col">Sign up</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr (click)="onSelectReservation(reservation)" *ngFor="let reservation of reservations; let i = index">
+        <th scope="row">{{i+1}}</th>
+        <td>{{reservation.title}}</td>
+        <td>{{reservation.from | date: 'shortDate'}}</td>
+        <td>{{reservation.from | date: 'shortTime'}}</td>
+        <td>{{reservation.until | date: 'shortTime'}}</td>
+        <td>{{reservation.capacity}}/{{getRoom(reservation.roomId)}}</td>
+        <td><button (click)="signUp()" class="btn btn-secondary">Sign up</button></td>
+      </tr>
+    </tbody>
+  </table>
 </div>

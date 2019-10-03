@@ -1,0 +1,10 @@
+.reservations{
+    display: flex;
+    flex-direction: column;
+}
+.reservations table{
+    flex: 2;
+}
+.reservations app-reservation-detail{
+    flex: 1;
+}

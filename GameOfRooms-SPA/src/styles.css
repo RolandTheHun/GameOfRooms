@@ -14,7 +14,7 @@
 
 .nav-tabs > li.open,
 .member-tabset > .nav-tabs > li:hover {
-  border-bottom: 4px solid #fbcdcf;
+  border-bottom: 4px solid #9c0707;
 }
 
 .member-tabset > .nav-tabs > li.open > a,
@@ -35,7 +35,7 @@
 }
 
 .member-tabset > .nav-tabs > li.active {
-  border-bottom: 4px solid #e95420;
+  border-bottom: 4px solid #1f974d;
   position: relative;
 }
 

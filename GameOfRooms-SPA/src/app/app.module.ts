@@ -36,6 +36,8 @@ import { ReservationListComponent } from './reservations/reservation-list/reserv
 import { ReservationListResolver } from './_resolvers/reservation-list.resolver';
 import { RatingListComponent } from './ratings/rating-list/rating-list.component';
 import { RatingListResolver } from './_resolvers/rating-list.resolver';
+import { RoomListResolver } from './_resolvers/room-list.resolver';
+import { ReservationDetailComponent } from './reservations/reservation-detail/reservation-detail.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -55,6 +57,7 @@ export function tokenGetter() {
     MemberEditComponent,
     TimeAgoPipe,
     ReservationListComponent,
+    ReservationDetailComponent,
     RatingListComponent
   ],
   imports: [
@@ -86,7 +89,8 @@ export function tokenGetter() {
     MemberEditResolver,
     PreventUnsavedChanges,
     ReservationListResolver,
-    RatingListResolver
+    RatingListResolver,
+    RoomListResolver
   ],
   bootstrap: [AppComponent]
 })
