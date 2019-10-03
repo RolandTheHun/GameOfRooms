@@ -32,6 +32,10 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { ReservationListComponent } from './reservations/reservation-list/reservation-list.component';
+import { ReservationListResolver } from './_resolvers/reservation-list.resolver';
+import { RatingListComponent } from './ratings/rating-list/rating-list.component';
+import { RatingListResolver } from './_resolvers/rating-list.resolver';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -49,7 +53,9 @@ export function tokenGetter() {
     MemberCardComponent,
     MemberDetailComponent,
     MemberEditComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
+    ReservationListComponent,
+    RatingListComponent
   ],
   imports: [
     BrowserModule,
@@ -78,8 +84,10 @@ export function tokenGetter() {
     MemberDetailResolver,
     MemberListResolver,
     MemberEditResolver,
-    PreventUnsavedChanges
+    PreventUnsavedChanges,
+    ReservationListResolver,
+    RatingListResolver
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

@@ -10,6 +10,10 @@ import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { ReservationListComponent } from './reservations/reservation-list/reservation-list.component';
+import { ReservationListResolver } from './_resolvers/reservation-list.resolver';
+import { RatingListComponent } from './ratings/rating-list/rating-list.component';
+import { RatingListResolver } from './_resolvers/rating-list.resolver';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -34,8 +38,24 @@ export const appRoutes: Routes = [
         resolve: { user: MemberEditResolver },
         canDeactivate: [PreventUnsavedChanges]
       },
-      { path: 'messages', component: MessagesComponent },
-      { path: 'lists', component: ListsComponent }
+      {
+        path: 'messages',
+        component: MessagesComponent
+      },
+      {
+        path: 'lists',
+        component: ListsComponent
+      },
+      {
+        path: 'reservations',
+        component: ReservationListComponent,
+        resolve: { reservations: ReservationListResolver }
+      },
+      {
+        path: 'ratings',
+        component: RatingListComponent,
+        resolve: { ratings: RatingListResolver }
+      }
     ]
   },
   { path: '**', redirectTo: '', pathMatch: 'full' }
