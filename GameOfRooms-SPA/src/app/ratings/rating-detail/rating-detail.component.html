@@ -1,0 +1,9 @@
+<div class="header">
+  <h1>{{name}}</h1>
+  <button class="btn btn-secondary"><i class="fa fa-plus"></i> Add rating</button>
+</div>
+<ul *ngFor="let item of ratings; let i = index">
+  <li><strong>#{{i+1}}</strong></li>
+  <li><strong>Star: </strong><i class="fa fa-star" *ngFor="let icon of [].constructor(item.star)"></i></li>
+  <li><strong>Overall summary: </strong>{{item.overall}}</li>
+</ul>

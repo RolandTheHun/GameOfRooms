@@ -1,27 +1,34 @@
 <div class="reservations">
-  <app-reservation-detail *ngIf="selectedReservation" [reservation]="selectedReservation"></app-reservation-detail>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Title</th>
-        <th scope="col">Date</th>
-        <th scope="col">Start</th>
-        <th scope="col">End</th>
-        <th scope="col">Capacity</th>
-        <th scope="col">Sign up</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr (click)="onSelectReservation(reservation)" *ngFor="let reservation of reservations; let i = index">
-        <th scope="row">{{i+1}}</th>
-        <td>{{reservation.title}}</td>
-        <td>{{reservation.from | date: 'shortDate'}}</td>
-        <td>{{reservation.from | date: 'shortTime'}}</td>
-        <td>{{reservation.until | date: 'shortTime'}}</td>
-        <td>{{reservation.capacity}}/{{getRoom(reservation.roomId)}}</td>
-        <td><button (click)="signUp()" class="btn btn-secondary">Sign up</button></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="reservations-list">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Date</th>
+          <th scope="col">Start</th>
+          <th scope="col">End</th>
+          <th scope="col">Capacity</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr (click)="onSelectReservation(reservation)"
+          *ngFor="let reservation of reservations | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+          <th scope="row">{{i+1}}</th>
+          <td>{{reservation.title}}</td>
+          <td>{{reservation.from | date: 'shortDate'}}</td>
+          <td>{{reservation.from | date: 'shortTime'}}</td>
+          <td>{{reservation.until | date: 'shortTime'}}</td>
+          <td>{{reservation.capacity}}/{{getRoom(reservation.roomId)}}</td>
+          <td><button (click)="signUp()" class="btn btn-secondary">Sign up</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-secondary"><i class="fa fa-plus"></i> Add reservation</button>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+  <div class="reservations-detail">
+    <app-reservation-detail *ngIf="selectedReservation" [reservation]="selectedReservation"></app-reservation-detail>
+  </div>
 </div>

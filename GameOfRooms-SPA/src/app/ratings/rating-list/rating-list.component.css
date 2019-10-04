@@ -1,0 +1,23 @@
+.ratings{
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+}
+
+.rating-list{
+    margin: 2em;
+    flex: 2;
+}
+.rating-detail{
+    margin: 2em;
+    flex: 3;
+}
+
+ul{
+    list-style-type: none;
+}
+
+pagination-controls{
+    float: right;
+    margin: 1em;
+}

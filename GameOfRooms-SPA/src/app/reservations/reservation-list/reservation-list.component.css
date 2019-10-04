@@ -1,10 +1,17 @@
 .reservations{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
-.reservations table{
+
+.reservations-list{
+    margin: 1em;
     flex: 2;
 }
-.reservations app-reservation-detail{
-    flex: 1;
+
+.reservations-detail{
+    flex:1;
+}
+
+pagination-controls{
+    float: right;
 }

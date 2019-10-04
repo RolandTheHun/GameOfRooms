@@ -11,6 +11,7 @@ import { Room } from 'src/app/_models/room';
 export class ReservationListComponent implements OnInit {
   reservations: Reservation[];
   rooms: Room[];
+  p: number = 1;
 
   selectedReservation: Reservation;
 

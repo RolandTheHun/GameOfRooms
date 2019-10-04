@@ -1,5 +1,15 @@
-<div>
-  <ul *ngFor="let rating of ratings">
-    <li>{{rating.star}}</li>
-  </ul>
+<div class="ratings">
+  <div class="rating-list list-group">
+    <ul (click)="onSelectConsultant(item.id)" class="list-group-item list-group-item-action"
+      *ngFor="let item of consultants | paginate: { itemsPerPage: 5, currentPage: p }">
+      <li><strong>Name: </strong>{{item.familyName}} {{item.firstName}}</li>
+      <li><i class="fa fa-star"></i><strong> Overall star: </strong>{{overallStars(item.id)}}</li>
+    </ul>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+  <div class="rating-detail">
+    <app-rating-detail *ngIf="selectedUserId" [name]="getName(selectedUserId)" [ratings]="getRatings(selectedUserId)">
+    </app-rating-detail>
+  </div>
+
 </div>

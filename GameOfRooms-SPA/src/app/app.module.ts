@@ -10,6 +10,7 @@ import {
 } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -38,6 +39,8 @@ import { RatingListComponent } from './ratings/rating-list/rating-list.component
 import { RatingListResolver } from './_resolvers/rating-list.resolver';
 import { RoomListResolver } from './_resolvers/room-list.resolver';
 import { ReservationDetailComponent } from './reservations/reservation-detail/reservation-detail.component';
+import { ConsultantListResolver } from './_resolvers/consultant-list.resolver';
+import { RatingDetailComponent } from './ratings/rating-detail/rating-detail.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -58,7 +61,8 @@ export function tokenGetter() {
     TimeAgoPipe,
     ReservationListComponent,
     ReservationDetailComponent,
-    RatingListComponent
+    RatingListComponent,
+    RatingDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -66,6 +70,7 @@ export function tokenGetter() {
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxPaginationModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     TabsModule.forRoot(),
@@ -90,6 +95,7 @@ export function tokenGetter() {
     PreventUnsavedChanges,
     ReservationListResolver,
     RatingListResolver,
+    ConsultantListResolver,
     RoomListResolver
   ],
   bootstrap: [AppComponent]
