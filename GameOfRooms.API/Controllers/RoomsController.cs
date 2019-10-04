@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using GameOfRooms.API.Data;
+using GameOfRooms.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,8 +12,10 @@ namespace GameOfRooms.API.Controllers
     public class RoomsController : ControllerBase
     {
         private readonly IGoRepository _repo;
-        public RoomsController(IGoRepository repo)
+        private readonly DataContext _context;
+        public RoomsController(IGoRepository repo, DataContext context)
         {
+            _context = context;
             _repo = repo;
         }
 
@@ -30,6 +33,15 @@ namespace GameOfRooms.API.Controllers
             var room = await _repo.GetRoom(id);
 
             return Ok(room);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Room>> PostRoom(Room room)
+        {
+            _context.Rooms.Add(room);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetRoom), new { id = room.Id }, room);
         }
     }
 }

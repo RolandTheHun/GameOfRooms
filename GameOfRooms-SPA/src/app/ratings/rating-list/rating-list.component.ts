@@ -29,7 +29,6 @@ export class RatingListComponent implements OnInit {
 
   onSelectConsultant(id: string) {
     this.selectedUserId = +id;
-    console.log(this.selectedUserId);
   }
 
   getName(id) {
@@ -45,7 +44,7 @@ export class RatingListComponent implements OnInit {
     const stars = this.ratings.filter(r => r.userId === id).map(r => r.star).reduce(function (acc, star) {
       return (acc + star) / l;
     });
-    return stars;
+    return stars.toFixed(2);
   }
 
 }
