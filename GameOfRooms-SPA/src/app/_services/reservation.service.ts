@@ -19,4 +19,8 @@ export class ReservationService {
   getReservation(id): Observable<Reservation> {
     return this.http.get<Reservation>(`${this.baseUrl}reservations/${id}`);
   }
+
+  updateReservation(id: number, cap: number) {
+    return this.http.put(`${this.baseUrl}reservations/${id}`, { capacity: cap });
+  }
 }

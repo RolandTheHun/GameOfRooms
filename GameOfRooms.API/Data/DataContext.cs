@@ -12,6 +12,15 @@ namespace GameOfRooms.API.Data
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Rating> Ratings { get; set; }
+        public DbSet<SignUp> Consultations { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<SignUp>().HasKey(k => new { k.UserId, k.ReservationId });
+            builder.Entity<SignUp>().HasOne(u => u.Student).WithMany(u => u.Consultations).HasForeignKey(u => u.UserId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<SignUp>().HasOne(u => u.Consultation).WithMany(u => u.Students).HasForeignKey(u => u.ReservationId).OnDelete(DeleteBehavior.Restrict);
+
+
+        }
 
     }
 }

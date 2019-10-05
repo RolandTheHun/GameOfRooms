@@ -1,8 +1,12 @@
 using System.Threading.Tasks;
 using GameOfRooms.API.Data;
 using GameOfRooms.API.Models;
+using GameOfRooms.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using AutoMapper;
+using System;
 
 namespace GameOfRooms.API.Controllers
 {
@@ -13,8 +17,10 @@ namespace GameOfRooms.API.Controllers
     {
         private readonly IGoRepository _repo;
         private readonly DataContext _context;
-        public ReservationsController(IGoRepository repo, DataContext context)
+        private readonly IMapper _mapper;
+        public ReservationsController(IGoRepository repo, DataContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
             _repo = repo;
 
@@ -43,7 +49,19 @@ namespace GameOfRooms.API.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetReservation), new { id = reservation.Id }, reservation);
+        }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> SignUpForReservation(int id, ReservationForSignUpDto reservationForSingUpDto)
+        {
+            var reservationFromRepo = await _repo.GetReservation(id);
+
+            _mapper.Map(reservationForSingUpDto, reservationFromRepo);
+
+            if (await _repo.SaveAll())
+                return NoContent();
+
+            throw new Exception($"Updating user {id} failed on save");
         }
     }
 }

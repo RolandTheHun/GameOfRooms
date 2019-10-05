@@ -41,6 +41,7 @@ import { RoomListResolver } from './_resolvers/room-list.resolver';
 import { ReservationDetailComponent } from './reservations/reservation-detail/reservation-detail.component';
 import { ConsultantListResolver } from './_resolvers/consultant-list.resolver';
 import { RatingDetailComponent } from './ratings/rating-detail/rating-detail.component';
+import { SignUpComponent } from './reservations/sign-up/sign-up.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -61,6 +62,7 @@ export function tokenGetter() {
     TimeAgoPipe,
     ReservationListComponent,
     ReservationDetailComponent,
+    SignUpComponent,
     RatingListComponent,
     RatingDetailComponent
   ],

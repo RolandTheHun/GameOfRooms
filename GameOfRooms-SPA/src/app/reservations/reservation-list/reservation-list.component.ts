@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Reservation } from 'src/app/_models/reservation';
 import { Room } from 'src/app/_models/room';
+import { ReservationService } from 'src/app/_services/reservation.service';
+import { UserService } from 'src/app/_services/user.service';
+import { AuthService } from 'src/app/_services/auth.service';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 
 @Component({
   selector: 'app-reservation-list',
@@ -15,7 +19,8 @@ export class ReservationListComponent implements OnInit {
 
   selectedReservation: Reservation;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {

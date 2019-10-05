@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using GameOfRooms.API.Helpers;
 using GameOfRooms.API.Models;
 
 namespace GameOfRooms.API.Data
@@ -17,5 +18,7 @@ namespace GameOfRooms.API.Data
         Task<Rating> GetRating(int id);
         Task<IEnumerable<Reservation>> GetReservations();
         Task<Reservation> GetReservation(int id);
+        Task<SignUp> GetConsultation(int userId, int consultationId);
+        Task<IEnumerable<SignUp>> GetUserConsultations();
     }
 }

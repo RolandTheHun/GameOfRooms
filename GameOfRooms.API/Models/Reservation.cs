@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace GameOfRooms.API.Models
 {
@@ -14,6 +15,8 @@ namespace GameOfRooms.API.Models
         public string Summary { get; set; }
         public bool OwnMachine { get; set; }
         public string Title { get; set; }
+        public int Capacity { get; set; }
+        public ICollection<SignUp> Students { get; set; }
 
     }
 }

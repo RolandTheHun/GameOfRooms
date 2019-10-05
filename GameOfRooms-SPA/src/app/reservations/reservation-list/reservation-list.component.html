@@ -21,7 +21,9 @@
           <td>{{reservation.from | date: 'shortTime'}}</td>
           <td>{{reservation.until | date: 'shortTime'}}</td>
           <td>{{reservation.capacity}}/{{getRoom(reservation.roomId)}}</td>
-          <td><button (click)="signUp()" class="btn btn-secondary">Sign up</button></td>
+          <td>
+            <app-sign-up [reservation]="reservation"></app-sign-up>
+          </td>
         </tr>
       </tbody>
     </table>

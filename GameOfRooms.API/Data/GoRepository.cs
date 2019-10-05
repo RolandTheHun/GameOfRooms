@@ -84,5 +84,17 @@ namespace GameOfRooms.API.Data
         {
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<SignUp> GetConsultation(int userId, int reservationId)
+        {
+            return await _context.Consultations.FirstOrDefaultAsync(u => u.UserId == userId && u.ReservationId == reservationId);
+        }
+
+        public async Task<IEnumerable<SignUp>> GetUserConsultations()
+        {
+            var consultatitions = await _context.Consultations.ToListAsync();
+
+            return consultatitions;
+        }
     }
 }

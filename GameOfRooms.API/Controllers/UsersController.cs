@@ -6,6 +6,7 @@ using AutoMapper;
 using GameOfRooms.API.Data;
 using GameOfRooms.API.Dtos;
 using GameOfRooms.API.Helpers;
+using GameOfRooms.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +18,9 @@ namespace GameOfRooms.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IDatingRepository _repo;
+        private readonly IGoRepository _repo;
         private readonly IMapper _mapper;
-        public UsersController(IDatingRepository repo, IMapper mapper)
+        public UsersController(IGoRepository repo, IMapper mapper)
         {
             _mapper = mapper;
             _repo = repo;
@@ -59,6 +60,34 @@ namespace GameOfRooms.API.Controllers
                 return NoContent();
 
             throw new Exception($"Updating user {id} failed on save");
+        }
+
+        [HttpPost("{id}/consultation/{reservationId}")]
+        public async Task<IActionResult> SignUp(int id, int reservationId)
+        {
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var consultation = await _repo.GetConsultation(id, reservationId);
+
+            if (consultation != null)
+                return BadRequest("You already signed up for this consultation!");
+
+            if (await _repo.GetReservation(reservationId) == null)
+                return NotFound();
+
+            consultation = new SignUp
+            {
+                UserId = id,
+                ReservationId = reservationId
+            };
+
+            _repo.Add<SignUp>(consultation);
+
+            if (await _repo.SaveAll())
+                return Ok();
+
+            return BadRequest("Failed to sign up on consultation!");
         }
     }
 }

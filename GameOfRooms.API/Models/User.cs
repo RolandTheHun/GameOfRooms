@@ -30,5 +30,6 @@ namespace GameOfRooms.API.Models
         public string FirstName { get; set; }
         public string Email { get; set; }
         public int TelephoneNumber { get; set; }
+        public ICollection<SignUp> Consultations { get; set; }
     }
 }

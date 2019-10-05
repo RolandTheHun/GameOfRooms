@@ -7,4 +7,5 @@ export interface Reservation {
     summary: string;
     ownMachine: boolean;
     title: string;
+    capacity: number;
 }
