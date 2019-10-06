@@ -3,7 +3,12 @@
   <button class="btn btn-secondary"><i class="fa fa-plus"></i> Add rating</button>
 </div>
 <ul *ngFor="let item of ratings; let i = index">
-  <li><strong>#{{i+1}}</strong></li>
-  <li><strong>Star: </strong><i class="fa fa-star" *ngFor="let icon of [].constructor(item.star)"></i></li>
-  <li><strong>Overall summary: </strong>{{item.overall}}</li>
+  <li><strong>#{{(pagination.itemsPerPage*pagination.currentPage)+(i-1)}}</strong></li>
+  <li><strong>Stars: </strong><i class="fa fa-star" *ngFor="let icon of [].constructor(item.star)"></i></li>
+  <li><strong>Overall: </strong> {{item.overall}}</li>
 </ul>
+<div class="d-flex justifiy-content-center">
+  <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+    [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)">
+  </pagination>
+</div>

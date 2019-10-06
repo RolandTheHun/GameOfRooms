@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable()
 export class RatingListResolver implements Resolve<Rating[]>{
     pageNumber = 1;
-    pageSize = 2;
+    pageSize = 5;
 
     constructor(
         private ratingService: RatingService,

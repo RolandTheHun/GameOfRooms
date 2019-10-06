@@ -14,6 +14,7 @@ export class RatingService {
 
   constructor(private http: HttpClient) { }
 
+  // az összes értékelést visszaadja
   getRatings(page?, itemsPerPage?): Observable<PaginatedResult<Rating[]>> {
     const paginatedResult: PaginatedResult<Rating[]> = new PaginatedResult<Rating[]>();
 
@@ -25,6 +26,29 @@ export class RatingService {
     }
 
     return this.http.get<Rating[]>(`${this.baseUrl}ratings`, { observe: 'response', params })
+      .pipe(
+        map(response => {
+          paginatedResult.result = response.body;
+          if (response.headers.get('Pagination') != null) {
+            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+          }
+          return paginatedResult;
+        })
+      );
+  }
+
+  // egy konzulend értékeléseit adja vissza
+  getRatingsOf(id: number, page?, itemsPerPage?): Observable<PaginatedResult<Rating[]>> {
+    const paginatedResult: PaginatedResult<Rating[]> = new PaginatedResult<Rating[]>();
+
+    let params = new HttpParams();
+
+    if (page != null && itemsPerPage != null) {
+      params = params.append('pageNumber', page);
+      params = params.append('pageSize', itemsPerPage);
+    }
+
+    return this.http.get<Rating[]>(`${this.baseUrl}ratings/ratingOf/${id}`, { observe: 'response', params })
       .pipe(
         map(response => {
           paginatedResult.result = response.body;
