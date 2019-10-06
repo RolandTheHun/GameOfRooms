@@ -2,13 +2,14 @@
   <div class="rating-list list-group">
     <ul (click)="onSelectConsultant(item.id,item.familyName+item.firstName)"
       class="list-group-item list-group-item-action" *ngFor="let item of consultants">
-      <li><strong>Name: </strong>{{item.familyName}} {{item.firstName}}</li>
+      <li><i class="fa fa-star"></i> {{item.familyName}} {{item.firstName}} <i class="fa fa-star"></i>
+      </li>
     </ul>
-  </div>
-  <div class="d-flex justify-content-center">
-    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
-      [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)">
-    </pagination>
+    <div class="d-flex">
+      <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+        [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)">
+      </pagination>
+    </div>
   </div>
   <div class="rating-detail">
     <app-rating-detail *ngIf="selectedUserId" [name]="selectedUserName" [id]="selectedUserId">

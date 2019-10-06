@@ -1,6 +1,6 @@
 .ratings{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     font-size: 14px;
 }
 
@@ -8,6 +8,12 @@
     margin: 2em;
     flex: 2;
 }
+
+.rating-list div{
+    justify-content: flex-end;
+    margin: 2em 0 2em 2em;
+}
+
 .rating-detail{
     margin: 2em;
     flex: 3;
@@ -15,6 +21,12 @@
 
 ul{
     list-style-type: none;
+}
+li{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
 }
 
 pagination-controls{

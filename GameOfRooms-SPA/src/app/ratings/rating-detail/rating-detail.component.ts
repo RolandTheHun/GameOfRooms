@@ -49,4 +49,12 @@ export class RatingDetailComponent implements OnChanges {
       });
   }
 
+  // overallStars() {
+  //   const l = this.ratings.length;
+  //   const stars = this.ratings.map(r => r.star).reduce(function (acc, star) {
+  //     return (acc + star) / l;
+  //   });
+  //   return stars.toFixed(2);
+  // }
+
 }
