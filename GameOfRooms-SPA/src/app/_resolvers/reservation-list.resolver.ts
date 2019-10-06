@@ -8,6 +8,8 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ReservationListResolver implements Resolve<Reservation[]>{
+    pageNumber = 1;
+    pageSize = 2;
 
     constructor(
         private reservationService: ReservationService,
@@ -16,7 +18,7 @@ export class ReservationListResolver implements Resolve<Reservation[]>{
     ) { }
 
     resolve(route: ActivatedRouteSnapshot): Observable<Reservation[]> {
-        return this.reservationService.getReservations().pipe(
+        return this.reservationService.getReservations(this.pageNumber, this.pageSize).pipe(
             catchError(error => {
                 this.alertify.error('Problem retrieving reservations!');
                 this.router.navigate(['/home']);

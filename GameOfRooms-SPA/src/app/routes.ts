@@ -56,7 +56,7 @@ export const appRoutes: Routes = [
       {
         path: 'ratings',
         component: RatingListComponent,
-        resolve: { ratings: RatingListResolver, consultants: ConsultantListResolver }
+        resolve: { ratings: RatingListResolver, consultants: MemberListResolver }
       }
     ]
   },

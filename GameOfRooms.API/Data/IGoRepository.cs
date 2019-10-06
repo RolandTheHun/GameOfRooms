@@ -10,13 +10,13 @@ namespace GameOfRooms.API.Data
         void Add<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
         Task<bool> SaveAll();
-        Task<IEnumerable<User>> GetUsers();
+        Task<PagedList<User>> GetUsers(UserParams userParams);
         Task<User> GetUser(int id);
         Task<IEnumerable<Room>> GetRooms();
         Task<Room> GetRoom(int id);
-        Task<IEnumerable<Rating>> GetRatings();
+        Task<PagedList<Rating>> GetRatings(RatingParams ratingParams);
         Task<Rating> GetRating(int id);
-        Task<IEnumerable<Reservation>> GetReservations();
+        Task<PagedList<Reservation>> GetReservations(ReservationParams reservationParams);
         Task<Reservation> GetReservation(int id);
         Task<SignUp> GetConsultation(int userId, int consultationId);
         Task<IEnumerable<SignUp>> GetUserConsultations();

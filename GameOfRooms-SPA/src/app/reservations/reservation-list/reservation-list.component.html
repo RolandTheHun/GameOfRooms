@@ -28,7 +28,11 @@
       </tbody>
     </table>
     <button class="btn btn-secondary"><i class="fa fa-plus"></i> Add reservation</button>
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    <div class="d-flex justify-content-center">
+      <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+        [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)">
+      </pagination>
+    </div>
   </div>
   <div class="reservations-detail">
     <app-reservation-detail *ngIf="selectedReservation" [reservation]="selectedReservation"></app-reservation-detail>

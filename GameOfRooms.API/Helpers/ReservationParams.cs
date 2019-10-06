@@ -1,8 +1,6 @@
-using GameOfRooms.API.Models;
-
 namespace GameOfRooms.API.Helpers
 {
-    public class UserParams
+    public class ReservationParams
     {
         private const int MaxPageSize = 50;
         public int PageNumber { get; set; } = 1;
@@ -12,5 +10,6 @@ namespace GameOfRooms.API.Helpers
             get { return pageSize; }
             set { pageSize = (value > MaxPageSize) ? MaxPageSize : value; }
         }
+
     }
 }

@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using GameOfRooms.API.Data;
+using GameOfRooms.API.Helpers;
 using GameOfRooms.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +21,11 @@ namespace GameOfRooms.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetRatings()
+        public async Task<IActionResult> GetRatings([FromQuery]RatingParams ratingParams)
         {
-            var ratings = await _repo.GetRatings();
+            var ratings = await _repo.GetRatings(ratingParams);
+
+            Response.AddPagination(ratings.CurrentPage, ratings.PageSize, ratings.TotalCount, ratings.TotalPages);
 
             return Ok(ratings);
         }

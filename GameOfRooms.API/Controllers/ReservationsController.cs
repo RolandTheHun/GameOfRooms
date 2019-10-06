@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using AutoMapper;
 using System;
+using GameOfRooms.API.Helpers;
 
 namespace GameOfRooms.API.Controllers
 {
@@ -27,9 +28,11 @@ namespace GameOfRooms.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetReservations()
+        public async Task<IActionResult> GetReservations([FromQuery]ReservationParams reservationParams)
         {
-            var reservations = await _repo.GetReservations();
+            var reservations = await _repo.GetReservations(reservationParams);
+
+            Response.AddPagination(reservations.CurrentPage, reservations.PageSize, reservations.TotalCount, reservations.TotalPages);
 
             return Ok(reservations);
         }

@@ -7,8 +7,10 @@ import { Observable, of } from 'rxjs';
 import { map, find, catchError } from 'rxjs/operators';
 
 @Injectable()
-export class ConsultantListResolver implements Resolve<User[]>
-{
+export class ConsultantListResolver implements Resolve<User[]>{
+    pageNumber = 1;
+    pageSize = 2;
+
     constructor(
         private userService: UserService,
         private router: Router,
@@ -16,8 +18,7 @@ export class ConsultantListResolver implements Resolve<User[]>
     ) { }
 
     resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
-        return this.userService.getUsers().pipe(
-            map(users => users.filter(u => u.userType === 1)),
+        return this.userService.getUsers(this.pageNumber, this.pageSize).pipe(
             catchError(error => {
                 this.alertify.error('Cannot retrieve consultants!' + error);
                 this.router.navigate(['/home']);

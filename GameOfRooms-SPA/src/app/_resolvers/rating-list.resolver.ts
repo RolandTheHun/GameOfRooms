@@ -7,8 +7,10 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()
-export class RatingListResolver implements Resolve<Rating[]>
-{
+export class RatingListResolver implements Resolve<Rating[]>{
+    pageNumber = 1;
+    pageSize = 2;
+
     constructor(
         private ratingService: RatingService,
         private router: Router,
@@ -16,7 +18,7 @@ export class RatingListResolver implements Resolve<Rating[]>
     ) { }
 
     resolve(route: ActivatedRouteSnapshot): Observable<Rating[]> {
-        return this.ratingService.getRatings().pipe(
+        return this.ratingService.getRatings(this.pageNumber, this.pageSize).pipe(
             catchError(error => {
                 this.alertify.error('Cannot retrieve ratings! ' + error);
                 this.router.navigate(['/home']);

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using GameOfRooms.API.Helpers;
 using GameOfRooms.API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,11 +46,11 @@ namespace GameOfRooms.API.Data
             return user;
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
-            var users = await _context.Users.ToListAsync();
+            var users = _context.Users;
 
-            return users;
+            return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<Rating> GetRating(int id)
@@ -59,11 +60,11 @@ namespace GameOfRooms.API.Data
             return rating;
         }
 
-        public async Task<IEnumerable<Rating>> GetRatings()
+        public async Task<PagedList<Rating>> GetRatings(RatingParams ratingParams)
         {
-            var ratings = await _context.Ratings.ToListAsync();
+            var ratings = _context.Ratings;
 
-            return ratings;
+            return await PagedList<Rating>.CreateAsync(ratings, ratingParams.PageNumber, ratingParams.PageSize);
         }
 
         public async Task<Reservation> GetReservation(int id)
@@ -73,11 +74,11 @@ namespace GameOfRooms.API.Data
             return reservation;
         }
 
-        public async Task<IEnumerable<Reservation>> GetReservations()
+        public async Task<PagedList<Reservation>> GetReservations(ReservationParams reservationParams)
         {
-            var reservations = await _context.Reservations.ToListAsync();
+            var reservations = _context.Reservations;
 
-            return reservations;
+            return await PagedList<Reservation>.CreateAsync(reservations, reservationParams.PageNumber, reservationParams.PageSize);
         }
 
         public async Task<bool> SaveAll()

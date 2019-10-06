@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Rating } from '../_models/rating';
+import { PaginatedResult } from '../_models/pagination';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +14,26 @@ export class RatingService {
 
   constructor(private http: HttpClient) { }
 
-  getRatings(): Observable<Rating[]> {
-    return this.http.get<Rating[]>(`${this.baseUrl}ratings`);
+  getRatings(page?, itemsPerPage?): Observable<PaginatedResult<Rating[]>> {
+    const paginatedResult: PaginatedResult<Rating[]> = new PaginatedResult<Rating[]>();
+
+    let params = new HttpParams();
+
+    if (page != null && itemsPerPage != null) {
+      params = params.append('pageNumber', page);
+      params = params.append('pageSize', itemsPerPage);
+    }
+
+    return this.http.get<Rating[]>(`${this.baseUrl}ratings`, { observe: 'response', params })
+      .pipe(
+        map(response => {
+          paginatedResult.result = response.body;
+          if (response.headers.get('Pagination') != null) {
+            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+          }
+          return paginatedResult;
+        })
+      );
   }
 
   getRating(id): Observable<Rating> {

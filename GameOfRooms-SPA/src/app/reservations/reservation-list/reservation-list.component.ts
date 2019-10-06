@@ -6,6 +6,7 @@ import { ReservationService } from 'src/app/_services/reservation.service';
 import { UserService } from 'src/app/_services/user.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
+import { Pagination, PaginatedResult } from 'src/app/_models/pagination';
 
 @Component({
   selector: 'app-reservation-list',
@@ -15,17 +16,21 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 export class ReservationListComponent implements OnInit {
   reservations: Reservation[];
   rooms: Room[];
-  p: number = 1;
+  pagination: Pagination;
 
   selectedReservation: Reservation;
 
   constructor(
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private reservationService: ReservationService,
+    private alertify: AlertifyService
+  ) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      this.reservations = data['reservations'];
+      this.reservations = data['reservations'].result;
       this.rooms = data['rooms'];
+      this.pagination = data['reservations'].pagination;
     });
   }
 
@@ -35,6 +40,21 @@ export class ReservationListComponent implements OnInit {
 
   onSelectReservation(reservation: Reservation) {
     this.selectedReservation = reservation;
+  }
+
+  pageChanged(event: any): void {
+    this.pagination.currentPage = event.page;
+    this.loadReservations();
+  }
+
+  loadReservations() {
+    this.reservationService.getReservations(this.pagination.currentPage, this.pagination.itemsPerPage)
+      .subscribe((res: PaginatedResult<Reservation[]>) => {
+        this.reservations = res.result;
+        this.pagination = res.pagination;
+      }, error => {
+        this.alertify.error(error);
+      });
   }
 
   /*signUp(id) {
