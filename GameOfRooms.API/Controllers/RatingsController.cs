@@ -30,6 +30,18 @@ namespace GameOfRooms.API.Controllers
             return Ok(ratings);
         }
 
+        [HttpGet("ratingOf/{id}")]
+        public async Task<IActionResult> GetConsultantRatings([FromQuery]RatingParams ratingParams, int id)
+        {
+            ratingParams.UserId = id;
+
+            var ratings = await _repo.GetRatings(ratingParams);
+
+            Response.AddPagination(ratings.CurrentPage, ratings.PageSize, ratings.TotalCount, ratings.TotalPages);
+
+            return Ok(ratings);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRating(int id)
         {

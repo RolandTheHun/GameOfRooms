@@ -12,5 +12,8 @@ namespace GameOfRooms.API.Helpers
             get { return pageSize; }
             set { pageSize = (value > MaxPageSize) ? MaxPageSize : value; }
         }
+
+        public int UserId { get; set; }
+        public UserType UserType { get; set; }
     }
 }

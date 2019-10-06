@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GameOfRooms.API.Helpers;
 using GameOfRooms.API.Models;
@@ -48,7 +49,11 @@ namespace GameOfRooms.API.Data
 
         public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
-            var users = _context.Users;
+            var users = _context.Users.AsQueryable();
+
+            users = users.Where(u => u.Id != userParams.UserId);
+
+            users = users.Where(u => u.UserType == userParams.UserType);
 
             return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         }
@@ -62,7 +67,12 @@ namespace GameOfRooms.API.Data
 
         public async Task<PagedList<Rating>> GetRatings(RatingParams ratingParams)
         {
-            var ratings = _context.Ratings;
+            var ratings = _context.Ratings.AsQueryable();
+
+            if (ratingParams.UserId != 0)
+            {
+                ratings = ratings.Where(r => r.UserId == ratingParams.UserId);
+            }
 
             return await PagedList<Rating>.CreateAsync(ratings, ratingParams.PageNumber, ratingParams.PageSize);
         }
