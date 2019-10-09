@@ -1,0 +1,33 @@
+<div [formGroup]="ratingForm" (ngSubmit)="addRating()">
+  <h2 class="text-center text-primary">Add your rating for consultant!</h2>
+  <div class="form-group">
+    <label for="overall">Overall summary:</label>
+    <input [ngClass]="{
+      'is-invalid':
+      ratingForm.get('overall').errors &&
+      ratingForm.get('overall').touched
+    }" type="text" class="form-control" placeholder="Your overall opinion of the consultant..."
+      formControlName="overall">
+    <div class="invalid-feedback">
+      Please write a little summary of your opinion on the consultant.
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="star">Stars:</label>
+    <select [ngClass]="{
+      'is-invalid':
+      ratingForm.get('star').errors &&
+      ratingForm.get('star').touched
+    }" formControlName="star" id="star" class="form-control">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <div class="invalid-feedback">
+      Please choose a rating between 1 and 5!
+    </div>
+  </div>
+  <button (click)="onSubmit()">Submit</button>
+</div>

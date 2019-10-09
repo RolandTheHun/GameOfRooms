@@ -1,7 +1,8 @@
 <div>
   <div class="header">
     <h1>{{name}}</h1>
-    <button class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
+    <button [disabled]="buttonBool" (click)="openAdd()" class="btn btn-secondary"><i class="fa fa-plus"></i>
+      Add</button>
   </div>
   <ul *ngFor="let item of ratings; let i = index">
     <li><strong>#{{(pagination.itemsPerPage*pagination.currentPage)+(i-1)}}</strong></li>
@@ -14,4 +15,6 @@
       nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
     </pagination>
   </div>
+  <app-rating-add *ngIf="buttonBool" (setButton)="onEmit($event)" [userId]="id">
+  </app-rating-add>
 </div>

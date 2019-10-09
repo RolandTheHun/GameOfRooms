@@ -26,10 +26,14 @@ li{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-
 }
 
 pagination-controls{
     float: right;
     margin: 1em;
+}
+
+.fa-star{
+    color: black;
+    text-shadow: 0 0 3px rgb(58, 58, 58);
 }

@@ -18,3 +18,8 @@ button{
 div{
     font-size: 20px;
 }
+
+.fa-star{
+    color: yellow;
+    text-shadow: 0 0 3px #000;
+}

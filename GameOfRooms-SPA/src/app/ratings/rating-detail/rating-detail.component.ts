@@ -17,6 +17,8 @@ export class RatingDetailComponent implements OnChanges {
   ratings: Rating[];
   pagination: Pagination;
 
+  buttonBool: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private ratingServcie: RatingService,
@@ -47,6 +49,14 @@ export class RatingDetailComponent implements OnChanges {
       }, error => {
         this.alertify.error(error);
       });
+  }
+
+  openAdd() {
+    this.buttonBool = true;
+  }
+
+  onEmit(emitValue: boolean) {
+    this.buttonBool = emitValue;
   }
 
   // overallStars() {

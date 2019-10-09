@@ -64,4 +64,9 @@ export class RatingService {
     return this.http.get<Rating>(`${this.baseUrl}ratings/${id}`);
   }
 
+  // Add new rating to database...
+  postRating(rating: Rating): Observable<Rating> {
+    return this.http.post<Rating>(`${this.baseUrl}ratings`, rating);
+  }
+
 }

@@ -43,6 +43,7 @@ import { ReservationDetailComponent } from './reservations/reservation-detail/re
 import { ConsultantListResolver } from './_resolvers/consultant-list.resolver';
 import { RatingDetailComponent } from './ratings/rating-detail/rating-detail.component';
 import { SignUpComponent } from './reservations/sign-up/sign-up.component';
+import { RatingAddComponent } from './ratings/rating-add/rating-add.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -65,7 +66,8 @@ export function tokenGetter() {
     ReservationDetailComponent,
     SignUpComponent,
     RatingListComponent,
-    RatingDetailComponent
+    RatingDetailComponent,
+    RatingAddComponent
   ],
   imports: [
     BrowserModule,
