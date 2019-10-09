@@ -7,11 +7,13 @@ import {
   BsDropdownModule,
   TabsModule,
   BsDatepickerModule,
-  PaginationModule
+  PaginationModule,
+  TimepickerModule
 } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -78,6 +80,8 @@ export function tokenGetter() {
     NgxPaginationModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    ModalModule.forRoot(),
+    TimepickerModule.forRoot(),
     TabsModule.forRoot(),
     PaginationModule.forRoot(),
     RouterModule.forRoot(appRoutes),

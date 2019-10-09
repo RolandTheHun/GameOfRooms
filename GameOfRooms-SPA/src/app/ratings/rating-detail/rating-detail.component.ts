@@ -30,6 +30,7 @@ export class RatingDetailComponent implements OnChanges {
       data => {
         this.ratings = data.result;
         this.pagination = data.pagination;
+        this.buttonBool = false;
       }, error => {
         this.alertify.error(error);
       }

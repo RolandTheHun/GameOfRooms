@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Reservation } from 'src/app/_models/reservation';
 import { Room } from 'src/app/_models/room';
 import { ReservationService } from 'src/app/_services/reservation.service';
-import { UserService } from 'src/app/_services/user.service';
-import { AuthService } from 'src/app/_services/auth.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { Pagination, PaginatedResult } from 'src/app/_models/pagination';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsDatepickerConfig } from 'ngx-bootstrap';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-reservation-list',
@@ -18,12 +19,20 @@ export class ReservationListComponent implements OnInit {
   rooms: Room[];
   pagination: Pagination;
 
+  modalRef: BsModalRef;
+  bsConfig: Partial<BsDatepickerConfig>;
+  fromTime: Date = new Date();
+  untilTime: Date = new Date();
+  reservationForm: FormGroup;
+
   selectedReservation: Reservation;
 
   constructor(
     private route: ActivatedRoute,
     private reservationService: ReservationService,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private modalService: BsModalService,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -32,6 +41,21 @@ export class ReservationListComponent implements OnInit {
       this.rooms = data['rooms'];
       this.pagination = data['reservations'].pagination;
     });
+    this.createReservationForm();
+  }
+
+  createReservationForm() {
+    this.reservationForm = this.fb.group({
+      title: ['', Validators.required],
+      date: [null, Validators.required],
+      from: [null, Validators.required],
+      until: [null, Validators.required],
+      capacity: ['', Validators.required]
+    });
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 
   getRoom(id: number) {
