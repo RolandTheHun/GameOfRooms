@@ -46,6 +46,7 @@ import { ConsultantListResolver } from './_resolvers/consultant-list.resolver';
 import { RatingDetailComponent } from './ratings/rating-detail/rating-detail.component';
 import { SignUpComponent } from './reservations/sign-up/sign-up.component';
 import { RatingAddComponent } from './ratings/rating-add/rating-add.component';
+import { ReservationAddComponent } from './reservations/reservation-add/reservation-add.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -66,6 +67,7 @@ export function tokenGetter() {
     TimeAgoPipe,
     ReservationListComponent,
     ReservationDetailComponent,
+    ReservationAddComponent,
     SignUpComponent,
     RatingListComponent,
     RatingDetailComponent,
@@ -73,12 +75,12 @@ export function tokenGetter() {
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     NgxPaginationModule,
     BsDropdownModule.forRoot(),
+    BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),
     ModalModule.forRoot(),
     TimepickerModule.forRoot(),
