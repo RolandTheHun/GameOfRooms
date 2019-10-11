@@ -47,6 +47,7 @@ import { RatingDetailComponent } from './ratings/rating-detail/rating-detail.com
 import { SignUpComponent } from './reservations/sign-up/sign-up.component';
 import { RatingAddComponent } from './ratings/rating-add/rating-add.component';
 import { ReservationAddComponent } from './reservations/reservation-add/reservation-add.component';
+import { ReservationAddGuard } from './_guards/reservation-add.guard';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -100,6 +101,7 @@ export function tokenGetter() {
     UserService,
     ErrorInterceptorProvider,
     AuthGuard,
+    ReservationAddGuard,
     AlertifyService,
     MemberDetailResolver,
     MemberListResolver,

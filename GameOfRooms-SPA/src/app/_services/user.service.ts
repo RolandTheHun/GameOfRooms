@@ -74,4 +74,9 @@ export class UserService {
   signUp(id: number, reservationId: number) {
     return this.http.post(`${this.baseUrl}users/${id}/consultation/${reservationId}`, {});
   }
+
+  // a felhasználó userType értékét adja vissza
+  getUserType(id: number): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}users/${id}/userType`);
+  }
 }

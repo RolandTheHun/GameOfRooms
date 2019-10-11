@@ -16,6 +16,7 @@ import { RatingListComponent } from './ratings/rating-list/rating-list.component
 import { RoomListResolver } from './_resolvers/room-list.resolver';
 import { ConsultantListResolver } from './_resolvers/consultant-list.resolver';
 import { ReservationAddComponent } from './reservations/reservation-add/reservation-add.component';
+import { ReservationAddGuard } from './_guards/reservation-add.guard';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -56,7 +57,8 @@ export const appRoutes: Routes = [
       {
         path: 'reservations/add',
         component: ReservationAddComponent,
-        resolve: { rooms: RoomListResolver }
+        resolve: { rooms: RoomListResolver },
+        canActivate: [ReservationAddGuard]
       },
       {
         path: 'ratings',

@@ -76,6 +76,16 @@ namespace GameOfRooms.API.Controllers
             return Ok(userToReturn);
         }
 
+        [HttpGet("{id}/userType")]
+        public async Task<IActionResult> GetUserType(int id)
+        {
+            var user = await _repo.GetUser(id);
+
+            var userType = user.UserType;
+
+            return Ok(userType);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
         {
