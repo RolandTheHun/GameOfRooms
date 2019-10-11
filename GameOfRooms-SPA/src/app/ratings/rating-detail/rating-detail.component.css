@@ -15,11 +15,15 @@ button{
     padding-left: 2em;
 }
 
-div{
-    font-size: 20px;
-}
-
 .fa-star{
     color: yellow;
     text-shadow: 0 0 3px #000;
+}
+
+h1{
+    font-weight: bold;
+}
+
+li{
+    font-style: italic;
 }

@@ -27,7 +27,8 @@
         </tr>
       </tbody>
     </table>
-    <button (click)="openModal(template)" class="btn btn-secondary"><i class="fa fa-plus"></i> Add reservation</button>
+    <button [routerLink]="['/reservations/add']" class="btn btn-secondary"><i class="fa fa-plus"></i> Add
+      reservation</button>
     <div class="d-flex justify-content-center">
       <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
         [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)">
@@ -38,44 +39,3 @@
     <app-reservation-detail *ngIf="selectedReservation" [reservation]="selectedReservation"></app-reservation-detail>
   </div>
 </div>
-
-<ng-template #template>
-  <form [formGroup]="reservationForm" ngSubmit="addReservation()">
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Adding new reservation</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <label for="title">Title</label>
-      <input [ngClass]="{
-          'is-invalid':
-          reservationForm.get('title').errors &&
-          reservationForm.get('title').touched
-        }" type="text" class="form-control" placeholder="The title of the consultation..." formControlName="title">
-      <label for="date">Date</label>
-      <input [ngClass]="{
-        'is-invalid':
-        reservationForm.get('date').errors &&
-        reservationForm.get('date').touched
-      }" type="text" class="form-control" placeholder="The date of the consultation..." formControlName="date"
-        bsDatepicker [bsConfig]="bsConfig" (click)="dp.show()" #dp="bsDatepicker" [outsideClick]="false">
-      <!-- <label for="from">From</label> -->
-      <timepicker [(ngModel)]="fromTime" [showMeridian]="isMeridian"></timepicker>
-      <timepicker [(ngModel)]="untilTime" [showMeridian]="isMeridian"></timepicker>
-      <!-- <label for="until">Until</label>
-      <label for="capacity">Capacity</label>
-      <input [ngClass]="{
-        'is-invalid':
-        reservationForm.get('').errors &&
-        reservationForm.get('').touched
-      }" type="number" class="form-control" placeholder="The capacity of the consultation..."
-        formControlName="capacity"> -->
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-primary">Submit</button>
-      <button (click)="modalRef.hide()" class="btn btn-warning">Cancel</button>
-    </div>
-  </form>
-</ng-template>

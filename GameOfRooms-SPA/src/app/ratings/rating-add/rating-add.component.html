@@ -1,6 +1,6 @@
 <hr>
 <form [formGroup]="ratingForm" (ngSubmit)="addRating()">
-  <h2 class="text-center">Add your rating for consultant!</h2>
+  <h2 class="text-center text-primary"><b>Add your rating for consultant!</b></h2>
   <div class="form-group">
     <label for="overall">Overall summary:</label>
     <textarea [ngClass]="{
@@ -20,6 +20,7 @@
       ratingForm.get('star').errors &&
       ratingForm.get('star').touched
     }" formControlName="star" id="star" class="form-control">
+      <option disabled selected value> -- Select rating -- </option>
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
@@ -31,5 +32,5 @@
     </div>
   </div>
   <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
-  <button class="btn btn-warning" (click)="onCancle()">Cancel</button>
+  <button class="btn btn-warning" (click)="onCancel()">Cancel</button>
 </form>

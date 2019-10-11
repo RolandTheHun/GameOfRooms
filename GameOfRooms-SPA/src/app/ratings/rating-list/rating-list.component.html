@@ -1,6 +1,6 @@
 <div class="ratings">
   <div class="rating-list list-group">
-    <h2>Consultants:</h2>
+    <h1 class="text-primary">Consultants:</h1>
     <ul (click)="onSelectConsultant(item.id,item.familyName+item.firstName)"
       class="list-group-item list-group-item-action" *ngFor="let item of consultants">
       <li><i class="fa fa-star"></i> <strong>{{item.familyName}} {{item.firstName}}</strong> <i class="fa fa-star"></i>

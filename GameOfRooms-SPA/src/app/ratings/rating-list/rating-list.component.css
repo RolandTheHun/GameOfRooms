@@ -37,3 +37,8 @@ pagination-controls{
     color: black;
     text-shadow: 0 0 3px rgb(58, 58, 58);
 }
+
+h1{
+    font-weight: bold;
+    font-style: italic;
+}

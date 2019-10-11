@@ -5,6 +5,7 @@ import { Room } from 'src/app/_models/room';
 import { ActivatedRoute } from '@angular/router';
 import { Reservation } from 'src/app/_models/reservation';
 import { AuthService } from 'src/app/_services/auth.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-reservation-add',
@@ -16,9 +17,9 @@ export class ReservationAddComponent implements OnInit {
   fromTime: Date = new Date();
   untilTime: Date = new Date();
   reservationForm: FormGroup;
-  reservation: any;
-  myReservation: Reservation;
+  reservation: Reservation;
   myDate: Date = new Date();
+  myDate2: Date = new Date();
 
   rooms: Room[];
 
@@ -27,6 +28,7 @@ export class ReservationAddComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private authService: AuthService,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -42,30 +44,35 @@ export class ReservationAddComponent implements OnInit {
   createReservationForm() {
     this.reservationForm = this.fb.group({
       title: ['', Validators.required],
-      date: [null, Validators.required],
       summary: ['', Validators.required],
       ownMachine: [false, Validators.required],
       room: [null, Validators.required]
     });
   }
 
+  goBack() {
+    this.location.back();
+  }
+
   onSubmit() {
     if (this.reservationForm.valid) {
-      this.reservation.title = this.reservationForm.controls['title'].value;
-      this.reservation.summary = this.reservationForm.controls['summary'].value;
-      this.reservation.ownMachine = this.reservationForm.controls['ownMachine'].value;
-      this.reservation.roomId = this.reservationForm.controls['room'].value;
+      this.myDate2 = this.myDate;
       this.myDate.setHours(this.fromTime.getHours());
       this.myDate.setMinutes(this.fromTime.getMinutes());
-      this.reservation.from = this.myDate;
-      this.myDate.setHours(this.untilTime.getHours());
-      this.myDate.setMinutes(this.untilTime.getMinutes());
-      this.reservation.until = this.myDate;
-      this.reservation.userId = this.authService.decodedToken.nameid;
-      this.reservation.capacity = this.rooms.find(r => r.id === this.reservation.roomId);
-
-      this.myReservation = Object.assign({}, this.reservation);
-      console.log(this.myReservation);
+      this.myDate2.setHours(this.untilTime.getHours());
+      this.myDate2.setMinutes(this.untilTime.getMinutes());
+      this.reservation = {
+        userId: this.authService.decodedToken.nameid,
+        title: this.reservationForm.controls['title'].value,
+        summary: this.reservationForm.controls['summary'].value,
+        roomId: this.reservationForm.controls['room'].value,
+        ownMachine: this.reservationForm.controls['ownMachine'].value,
+        from: this.myDate,
+        until: this.myDate2,
+        capacity: this.rooms.find(r => r.id === +this.reservationForm.controls['room'].value).capacity,
+        id: null
+      };
+      console.log(this.reservation);
     }
   }
 

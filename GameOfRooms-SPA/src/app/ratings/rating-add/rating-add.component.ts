@@ -51,7 +51,7 @@ export class RatingAddComponent implements OnInit {
     this.setButton.emit(false);
   }
 
-  onCancle() {
+  onCancel() {
     this.setButton.emit(false);
   }
 
