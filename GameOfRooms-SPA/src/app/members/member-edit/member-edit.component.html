@@ -1,7 +1,7 @@
 <div class="container mt-4">
   <div class="row">
     <div class="col-sm-4">
-      <h1>Your profile</h1>
+      <h1 class="text-primary"><b>Your profile</b></h1>
     </div>
     <div class="col-sm-8">
       <div *ngIf="editForm.dirty" class="alert alert-info">
@@ -15,19 +15,20 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="card">
-        <img
-          class="card-img-top img-thumbnail"
-          src="{{ user.photoUrl || '../../../assets/user.png' }}"
-          alt="{{ user.knownAs }}"
-        />
+        <!-- <img class="card-img-top img-thumbnail" src="{{ user.photoUrl || '../../../assets/user.png' }}"
+          alt="{{ user.knownAs }}" /> -->
         <div class="card-body">
-          <div>
-            <strong>Location:</strong>
-            <p>{{ user.city }}, {{ user.country }}</p>
+          <div style="margin-top: 1em;">
+            <strong>Name:</strong>
+            <p>{{ user.familyName }} {{ user.firstName }}</p>
           </div>
           <div>
-            <strong>Age:</strong>
-            <p>{{ user.age }}</p>
+            <strong>E-mail:</strong>
+            <p>{{ user.email }}</p>
+          </div>
+          <div>
+            <strong>Telephone:</strong>
+            <p>{{ user.telephoneNumber }}</p>
           </div>
           <div>
             <strong>Last active:</strong>
@@ -39,11 +40,7 @@
           </div>
         </div>
         <div class="card-footer">
-          <button
-            [disabled]="!editForm.dirty"
-            class="btn btn-success btn-block"
-            form="editForm"
-          >
+          <button [disabled]="!editForm.dirty" class="btn btn-success btn-block" form="editForm">
             Save changes
           </button>
         </div>
@@ -54,48 +51,24 @@
         <tabset class="member-tabset">
           <tab heading="Edit profile">
             <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser()">
-              <h4>Description</h4>
-              <textarea
-                name="introduction"
-                rows="6"
-                class="form-control"
-                [(ngModel)]="user.introduction"
-              ></textarea>
-              <h4>Looking for</h4>
-              <textarea
-                name="lookingFor"
-                rows="6"
-                class="form-control"
-                [(ngModel)]="user.lookingFor"
-              ></textarea>
-              <h4>Interests</h4>
-              <textarea
-                name="interests"
-                rows="6"
-                class="form-control"
-                [(ngModel)]="user.intrests"
-              ></textarea>
-              <h4>Location Details:</h4>
+              <h4>E-mail</h4>
+              <input type="email" name="email" rows="6" class="form-control" [(ngModel)]="user.email" />
+              <h4>Telephone number</h4>
+              <input type="text" name="telephoneNumber" rows="6" class="form-control"
+                [(ngModel)]="user.telephoneNumber" />
+              <h4>Introduction</h4>
+              <textarea name="Introduction" rows="6" class="form-control" [(ngModel)]="user.introduction"></textarea>
+              <!-- <h4>Location Details:</h4>
               <div class="form-inline">
                 <label for="city">City</label>
-                <input
-                  type="text"
-                  class="from-control"
-                  name="city"
-                  [(ngModel)]="user.city"
-                />
+                <input type="text" class="from-control" name="city" [(ngModel)]="user.city" />
                 <label for="country">City</label>
-                <input
-                  type="text"
-                  class="from-control"
-                  name="country"
-                  [(ngModel)]="user.country"
-                />
-              </div>
+                <input type="text" class="from-control" name="country" [(ngModel)]="user.country" />
+              </div> -->
             </form>
           </tab>
-          <tab heading="Edit photos">
-            <h4>Photos</h4>
+          <tab heading="Valami...">
+            <h4>valami</h4>
             <p>Photo edit goes here...</p>
           </tab>
         </tabset>

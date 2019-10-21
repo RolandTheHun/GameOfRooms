@@ -1,10 +1,13 @@
 <div class="tab-panel">
   <tabset class="member-tabset">
-    <tab heading="{{ reservation.title }} summary">
+    <tab heading="Summary">
       <span>{{ reservation.summary }}</span>
     </tab>
     <tab heading="Is own machine needed?">
       <span>{{ reservation.ownMachine ? 'Yes' : 'No' }}</span>
+    </tab>
+    <tab heading="Room number">
+      <span>{{ room?.roomNumber }}</span>
     </tab>
   </tabset>
 </div>

@@ -22,13 +22,16 @@
           <td>{{reservation.from | date: 'shortTime'}}</td>
           <td>{{reservation.until | date: 'shortTime'}}</td>
           <td>{{reservation.capacity}}/{{getRoom(reservation.roomId)}}</td>
-          <td>
+          <td class="text-center">
             <app-sign-up [reservation]="reservation"></app-sign-up>
+            <i class="fa fa-edit" style="margin-left: 0.5em; color: #14a301;"></i>
+            <i class="fa fa-trash" style="margin-left: 0.5em; color: red;"></i>
           </td>
         </tr>
       </tbody>
     </table>
-    <button [routerLink]="['/reservations/add']" class="btn btn-secondary"><i class="fa fa-plus"></i> Add
+    <button [routerLink]="['/reservations/add']" class="btn btn-info"><i class="fa fa-plus" style="font-size: 1em;"></i>
+      Add
       reservation</button>
     <div class="d-flex justify-content-center">
       <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"

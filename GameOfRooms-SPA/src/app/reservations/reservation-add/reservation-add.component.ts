@@ -79,7 +79,7 @@ export class ReservationAddComponent implements OnInit {
       this.untilTime.setDate(this.myDate.getDate());
       this.untilTime.setSeconds(0);
       this.reservation.until = this.untilTime;
-      this.reservationService.getReservations().subscribe(
+      this.reservationService.getReservations(1, 1000).subscribe(
         s => {
           this.reservations = s.result.filter(r => r.roomId === +this.reservation.roomId
             && new Date(r.from).getDate() === this.reservation.from.getDate()

@@ -5,9 +5,13 @@
 
 .reservations-list{
     margin: 1em;
-    flex: 2;
+    flex: 3;
+}
+
+.reservations-list i{
+    font-size: 1.5em;
 }
 
 .reservations-detail{
-    flex:1;
+    flex: 2;
 }
