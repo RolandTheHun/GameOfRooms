@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Reservation } from 'src/app/_models/reservation';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Location } from '@angular/common';
+import { ReservationService } from 'src/app/_services/reservation.service';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 
 @Component({
   selector: 'app-reservation-add',
@@ -19,15 +21,17 @@ export class ReservationAddComponent implements OnInit {
   reservationForm: FormGroup;
   reservation: Reservation;
   myDate: Date = new Date();
-  myDate2: Date = new Date();
 
   rooms: Room[];
+  reservations: Reservation[];
 
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private authService: AuthService,
+    private reservationService: ReservationService,
+    private alertify: AlertifyService,
     private location: Location
   ) { }
 
@@ -56,23 +60,44 @@ export class ReservationAddComponent implements OnInit {
 
   onSubmit() {
     if (this.reservationForm.valid) {
-      this.myDate2 = this.myDate;
-      this.myDate.setHours(this.fromTime.getHours());
-      this.myDate.setMinutes(this.fromTime.getMinutes());
-      this.myDate2.setHours(this.untilTime.getHours());
-      this.myDate2.setMinutes(this.untilTime.getMinutes());
       this.reservation = {
         userId: this.authService.decodedToken.nameid,
         title: this.reservationForm.controls['title'].value,
         summary: this.reservationForm.controls['summary'].value,
         roomId: this.reservationForm.controls['room'].value,
         ownMachine: this.reservationForm.controls['ownMachine'].value,
-        from: this.myDate,
-        until: this.myDate2,
+        from: null,
+        until: null,
         capacity: this.rooms.find(r => r.id === +this.reservationForm.controls['room'].value).capacity,
         id: null
       };
-      console.log(this.reservation);
+      this.fromTime.setMonth(this.myDate.getMonth());
+      this.fromTime.setDate(this.myDate.getDate());
+      this.fromTime.setSeconds(0);
+      this.reservation.from = this.fromTime;
+      this.untilTime.setMonth(this.myDate.getMonth());
+      this.untilTime.setDate(this.myDate.getDate());
+      this.untilTime.setSeconds(0);
+      this.reservation.until = this.untilTime;
+      this.reservationService.getReservations().subscribe(
+        s => {
+          this.reservations = s.result.filter(r => r.roomId === +this.reservation.roomId
+            && new Date(r.from).getDate() === this.reservation.from.getDate()
+            && ((new Date(r.from).getTime() <= this.reservation.from.getTime()
+              && new Date(r.until).getTime() >= this.reservation.from.getTime())
+              || (new Date(r.from).getTime() <= this.reservation.until.getTime()
+                && new Date(r.until).getTime() >= this.reservation.until.getTime())
+              || (new Date(r.from).getTime() >= this.reservation.from.getTime()
+                && new Date(r.until).getTime() <= this.reservation.until.getTime())));
+        }, err => console.log('Error'), () => {
+          if (this.reservations.length !== 0) {
+            //TODO foglalás
+            this.alertify.error('In this timestamp there is already a consultation in this room!');
+          } else {
+            this.alertify.success('Consultation reserving in progress...');
+          }
+        }
+      );
     }
   }
 

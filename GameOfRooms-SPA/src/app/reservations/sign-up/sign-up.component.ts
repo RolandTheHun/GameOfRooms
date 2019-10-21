@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { ReservationService } from 'src/app/_services/reservation.service';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sign-up',
@@ -23,6 +24,18 @@ export class SignUpComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  checkUser(id: number) {
+    this.userService.getUserType(this.authService.decodedToken.nameid).subscribe(
+      data => {
+        if (data === 0) {
+          this.signUp(id);
+        } else {
+          this.alertify.error('Consultants cant sign up for consultations!');
+        }
+      }, err => this.alertify.error(err)
+    );
   }
 
   signUp(id: number) {
