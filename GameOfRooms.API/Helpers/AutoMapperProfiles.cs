@@ -23,6 +23,7 @@ namespace GameOfRooms.API.Helpers
             CreateMap<UserForUpdateDto, User>();
             CreateMap<UserForRegisterDto, User>();
             CreateMap<ReservationForSignUpDto, Reservation>();
+            CreateMap<ReservationForUpdateDto, Reservation>();
         }
     }
 }

@@ -28,7 +28,7 @@
           </div>
           <div>
             <strong>Telephone:</strong>
-            <p>{{ user.telephoneNumber }}</p>
+            <p>+36{{ user.telephoneNumber }}</p>
           </div>
           <div>
             <strong>Last active:</strong>
@@ -53,7 +53,7 @@
             <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser()">
               <h4>E-mail</h4>
               <input type="email" name="email" rows="6" class="form-control" [(ngModel)]="user.email" />
-              <h4>Telephone number</h4>
+              <h4>Telephone number (example: 204678861)</h4>
               <input type="text" name="telephoneNumber" rows="6" class="form-control"
                 [(ngModel)]="user.telephoneNumber" />
               <h4>Introduction</h4>

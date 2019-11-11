@@ -99,7 +99,7 @@ namespace GameOfRooms.API.Controllers
             if (await _repo.SaveAll())
                 return NoContent();
 
-            throw new Exception($"Updating user {id} failed on save");
+            throw new Exception($"Updating user {id} failed on save!");
         }
 
         [HttpPost("{id}/consultation/{reservationId}")]

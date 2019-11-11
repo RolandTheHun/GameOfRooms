@@ -7,5 +7,7 @@ namespace GameOfRooms.API.Dtos
         public string Intrests { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+        public string Email { get; set; }
+        public int TelephoneNumber { get; set; }
     }
 }

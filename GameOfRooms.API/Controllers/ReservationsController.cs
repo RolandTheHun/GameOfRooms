@@ -66,5 +66,39 @@ namespace GameOfRooms.API.Controllers
 
             throw new Exception($"Updating user {id} failed on save");
         }
+
+        [HttpPut("updateReservation/{id}")]
+        public async Task<IActionResult> UpdateUser(int id, ReservationForUpdateDto reservationForUpdateDto)
+        {
+            // if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            //     return Unauthorized();
+
+            var reservationFromRepo = await _repo.GetReservation(id);
+
+            _mapper.Map(reservationForUpdateDto, reservationFromRepo);
+
+            if (await _repo.SaveAll())
+                return NoContent();
+
+            throw new Exception($"Updating reservation {id} failed on save!");
+        }
+
+        [HttpDelete("deleteReservation/{id}")]
+        public async Task<IActionResult> DeleteReservation(int id)
+        {
+            var reservationFromRepo = await _repo.GetReservation(id);
+
+            if (reservationFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _repo.Delete(reservationFromRepo);
+
+            if (await _repo.SaveAll())
+                return NoContent();
+
+            throw new Exception($"Deleting reservation {id} failed on save!");
+        }
     }
 }
