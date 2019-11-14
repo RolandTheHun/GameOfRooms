@@ -11,6 +11,7 @@
           <th scope="col">End</th>
           <th scope="col">Capacity</th>
           <th scope="col">Action</th>
+          <th scope="col">Modify</th>
         </tr>
       </thead>
       <tbody>
@@ -24,8 +25,12 @@
           <td>{{reservation.capacity}}/{{getRoom(reservation.roomId)}}</td>
           <td class="text-center">
             <app-sign-up [reservation]="reservation"></app-sign-up>
-            <i class="fa fa-edit" style="margin-left: 0.5em; color: #14a301;"></i>
-            <i class="fa fa-trash" style="margin-left: 0.5em; color: red;"></i>
+          </td>
+          <td>
+            <button style="all: unset" *ngIf="currentUser == +reservation.userId"><i class="fa fa-edit"
+                style="margin-left: 0.5em; color: #14a301;"></i></button>
+            <button style="all: unset" *ngIf="currentUser == +reservation.userId"><i class="fa fa-trash"
+                style="margin-left: 0.5em; color: red;" (click)="onDelete(+reservation.id)"></i></button>
           </td>
         </tr>
       </tbody>

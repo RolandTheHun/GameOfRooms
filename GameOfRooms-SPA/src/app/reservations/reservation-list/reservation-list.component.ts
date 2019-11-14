@@ -8,6 +8,7 @@ import { Pagination, PaginatedResult } from 'src/app/_models/pagination';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-reservation-list',
@@ -18,6 +19,7 @@ export class ReservationListComponent implements OnInit {
   reservations: Reservation[];
   rooms: Room[];
   pagination: Pagination;
+  currentUser = this.authService.decodedToken.nameid;
 
   modalRef: BsModalRef;
   bsConfig: Partial<BsDatepickerConfig>;
@@ -32,7 +34,8 @@ export class ReservationListComponent implements OnInit {
     private reservationService: ReservationService,
     private alertify: AlertifyService,
     private modalService: BsModalService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -42,6 +45,7 @@ export class ReservationListComponent implements OnInit {
       this.pagination = data['reservations'].pagination;
     });
     this.createReservationForm();
+    console.log(this.currentUser);
   }
 
   createReservationForm() {
@@ -78,6 +82,19 @@ export class ReservationListComponent implements OnInit {
         this.pagination = res.pagination;
       }, error => {
         this.alertify.error(error);
+      });
+  }
+
+  onDelete(id: number) {
+    this.reservationService.deleteReservation(id).subscribe(
+      () => {
+        this.alertify.success('Successfully deleted reservation!');
+      }, err => {
+        this.alertify.error(err);
+      }, () => {
+        this.reservationService.getReservations(this.pagination.currentPage, this.pagination.itemsPerPage).subscribe(
+          data => this.reservations = data.result
+        );
       });
   }
 

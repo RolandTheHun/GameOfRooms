@@ -41,7 +41,15 @@ export class ReservationService {
     return this.http.get<Reservation>(`${this.baseUrl}reservations/${id}`);
   }
 
+  postReservation(reservation: Reservation): Observable<Reservation> {
+    return this.http.post<Reservation>(`${this.baseUrl}reservations`, reservation);
+  }
+
   updateReservation(id: number, cap: number) {
     return this.http.put(`${this.baseUrl}reservations/${id}`, { capacity: cap });
+  }
+
+  deleteReservation(id: number) {
+    return this.http.delete(`${this.baseUrl}reservations/deleteReservation/${id}`);
   }
 }

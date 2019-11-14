@@ -47,12 +47,12 @@
       </select>
     </div>
     <div class="form-group">
-      <label for="room">Room:</label>
+      <label for="roomId">Room:</label>
       <select [ngClass]="{
         'is-invalid':
-        reservationForm.get('room').errors &&
-        reservationForm.get('room').touched
-      }" class="form-control" formControlName="room" id="room">
+        reservationForm.get('roomId').errors &&
+        reservationForm.get('roomId').touched
+      }" class="form-control" formControlName="roomId" id="roomId">
         <option [value]="null" selected disabled>Select a room please...</option>
         <option *ngFor="let room of rooms" [value]="room.id">{{room.roomNumber}}
         </option>

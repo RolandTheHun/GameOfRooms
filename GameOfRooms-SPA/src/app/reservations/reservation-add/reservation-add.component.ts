@@ -50,7 +50,7 @@ export class ReservationAddComponent implements OnInit {
       title: ['', Validators.required],
       summary: ['', Validators.required],
       ownMachine: [false, Validators.required],
-      room: [null, Validators.required]
+      roomId: [null, Validators.required]
     });
   }
 
@@ -60,17 +60,21 @@ export class ReservationAddComponent implements OnInit {
 
   onSubmit() {
     if (this.reservationForm.valid) {
-      this.reservation = {
-        userId: this.authService.decodedToken.nameid,
-        title: this.reservationForm.controls['title'].value,
-        summary: this.reservationForm.controls['summary'].value,
-        roomId: this.reservationForm.controls['room'].value,
-        ownMachine: this.reservationForm.controls['ownMachine'].value,
-        from: null,
-        until: null,
-        capacity: this.rooms.find(r => r.id === +this.reservationForm.controls['room'].value).capacity,
-        id: null
-      };
+      // this.reservation = {
+      //   userId: this.authService.decodedToken.nameid,
+      //   title: this.reservationForm.controls['title'].value,
+      //   summary: this.reservationForm.controls['summary'].value,
+      //   roomId: this.reservationForm.controls['room'].value,
+      //   ownMachine: this.reservationForm.controls['ownMachine'].value,
+      //   from: null,
+      //   until: null,
+      //   capacity: this.rooms.find(r => r.id === +this.reservationForm.controls['room'].value).capacity,
+      //   id: null
+      // };
+      this.reservation = Object.assign({}, this.reservationForm.value);
+      this.reservation.userId = +this.authService.decodedToken.nameid;
+      this.reservation.capacity = 0;
+      this.reservation.roomId = +this.reservationForm.controls['roomId'].value;
       this.fromTime.setMonth(this.myDate.getMonth());
       this.fromTime.setDate(this.myDate.getDate());
       this.fromTime.setSeconds(0);
@@ -91,10 +95,12 @@ export class ReservationAddComponent implements OnInit {
                 && new Date(r.until).getTime() <= this.reservation.until.getTime())));
         }, err => console.log('Error'), () => {
           if (this.reservations.length !== 0) {
-            //TODO foglalás
             this.alertify.error('In this timestamp there is already a consultation in this room!');
           } else {
-            this.alertify.success('Consultation reserving in progress...');
+            console.log(this.reservation);
+            this.reservationService.postReservation(this.reservation).subscribe();
+            this.alertify.success('Consultation reservation in progress...');
+            this.location.back();
           }
         }
       );
