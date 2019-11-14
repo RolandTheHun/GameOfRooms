@@ -1,0 +1,71 @@
+<div class="reservationAdd">
+  <h1 class="text-primary text-center">Edit your consultation!</h1>
+  <div class="dates">
+    <label for="date">Date:</label>
+    <input class="form-control" [(ngModel)]="myDate" placeholder="Date of the consultation..." name="date" type="text"
+      bsDatepicker [bsConfig]="bsConfig" />
+    <div class="timePickers">
+      <div>
+        <label for="fromTime">From: </label>
+        <timepicker name="fromTime" [(ngModel)]="fromTime" [showMeridian]="isMeridian"></timepicker>
+      </div>
+      <div>
+        <label for="untilTime">Until: </label>
+        <timepicker name="untilTime" [(ngModel)]="untilTime" [showMeridian]="isMeridian"></timepicker>
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="title">Title:</label>
+      <input [ngClass]="{
+        'is-invalid':
+        reservationForm.get('title').errors &&
+        reservationForm.get('title').touched
+      }" class="form-control" placeholder="Title of the consultation..." formControlName="title" type="text" />
+      <div class="invalid-feedback">
+        Please write a title!
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="summary">Summary:</label>
+      <textarea [ngClass]="{
+        'is-invalid':
+        reservationForm.get('summary').errors &&
+        reservationForm.get('summary').touched
+      }" class="form-control" placeholder="Summary of the consultation..." formControlName="summary"
+        type="text"></textarea>
+      <div class="invalid-feedback">
+        Please write a summary!
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="ownMachine">Computer needed:</label>
+      <select class="form-control" formControlName="ownMachine" id="ownMachine">
+        <option value="false" selected>No computer needed.</option>
+        <option value="true">Computer needed.</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="roomId">Room:</label>
+      <select [ngClass]="{
+        'is-invalid':
+        reservationForm.get('roomId').errors &&
+        reservationForm.get('roomId').touched
+      }" class="form-control" formControlName="roomId" id="roomId">
+        <option [value]="null" selected disabled>Select a room please...</option>
+        <option *ngFor="let room of rooms" [value]="room.id">{{room.roomNumber}}
+        </option>
+      </select>
+      <div class="invalid-feedback">
+        Please choose an option!
+      </div>
+    </div>
+    <button class="btn btn-danger" (click)="goBack()" type="reset">Cancel</button>
+    <button class="btn btn-primary" style="margin-right: 1em;" [disabled]="!reservationForm.valid"
+      type="submit">Submit</button>
+  </form>
+</div>
+
+<p>{{reservationForm.value | json}}</p>
+<p>{{reservationForm.status | json}}</p>

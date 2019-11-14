@@ -49,6 +49,10 @@ export class ReservationService {
     return this.http.put(`${this.baseUrl}reservations/${id}`, { capacity: cap });
   }
 
+  updateReservationFully(id: number, reservation: Reservation) {
+    return this.http.put(`${this.baseUrl}reservations/updateReservation/${id}`, reservation);
+  }
+
   deleteReservation(id: number) {
     return this.http.delete(`${this.baseUrl}reservations/deleteReservation/${id}`);
   }

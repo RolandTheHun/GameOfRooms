@@ -15,7 +15,8 @@ export class ReservationAddGuard implements CanActivate {
     constructor(
         private authService: AuthService,
         private userService: UserService,
-        private alertify: AlertifyService
+        private alertify: AlertifyService,
+        private router: Router
     ) { }
 
     canActivate(): Observable<boolean> {
@@ -25,6 +26,7 @@ export class ReservationAddGuard implements CanActivate {
                     return true;
                 }
                 this.alertify.error('You shall not pass!');
+                this.router.navigate(['/reservations']);
                 return false;
             }
             )

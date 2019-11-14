@@ -48,6 +48,7 @@ import { SignUpComponent } from './reservations/sign-up/sign-up.component';
 import { RatingAddComponent } from './ratings/rating-add/rating-add.component';
 import { ReservationAddComponent } from './reservations/reservation-add/reservation-add.component';
 import { ReservationAddGuard } from './_guards/reservation-add.guard';
+import { ReservationEditComponent } from './reservations/reservation-edit/reservation-edit.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -69,6 +70,7 @@ export function tokenGetter() {
     ReservationListComponent,
     ReservationDetailComponent,
     ReservationAddComponent,
+    ReservationEditComponent,
     SignUpComponent,
     RatingListComponent,
     RatingDetailComponent,

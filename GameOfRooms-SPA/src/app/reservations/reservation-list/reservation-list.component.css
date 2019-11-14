@@ -15,3 +15,11 @@
 .reservations-detail{
     flex: 2;
 }
+
+.icons{
+    all: unset;
+}
+
+.icons:hover{
+    transform: scale(1.6);
+}

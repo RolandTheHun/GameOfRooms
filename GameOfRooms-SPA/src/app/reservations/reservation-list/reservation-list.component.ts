@@ -9,6 +9,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth.service';
+import { UserService } from 'src/app/_services/user.service';
 
 @Component({
   selector: 'app-reservation-list',
@@ -20,6 +21,7 @@ export class ReservationListComponent implements OnInit {
   rooms: Room[];
   pagination: Pagination;
   currentUser = this.authService.decodedToken.nameid;
+  userType: number;
 
   modalRef: BsModalRef;
   bsConfig: Partial<BsDatepickerConfig>;
@@ -35,7 +37,8 @@ export class ReservationListComponent implements OnInit {
     private alertify: AlertifyService,
     private modalService: BsModalService,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -56,6 +59,10 @@ export class ReservationListComponent implements OnInit {
       until: [null, Validators.required],
       capacity: ['', Validators.required]
     });
+    this.userService.getUserType(this.currentUser).subscribe(
+      data => this.userType = data,
+      err => this.alertify.error(err)
+    );
   }
 
   openModal(template: TemplateRef<any>) {
@@ -85,17 +92,23 @@ export class ReservationListComponent implements OnInit {
       });
   }
 
+  areYouSure(): boolean {
+    return confirm('Are you sure you want to delete?');
+  }
+
   onDelete(id: number) {
-    this.reservationService.deleteReservation(id).subscribe(
-      () => {
-        this.alertify.success('Successfully deleted reservation!');
-      }, err => {
-        this.alertify.error(err);
-      }, () => {
-        this.reservationService.getReservations(this.pagination.currentPage, this.pagination.itemsPerPage).subscribe(
-          data => this.reservations = data.result
-        );
-      });
+    if (this.areYouSure()) {
+      this.reservationService.deleteReservation(id).subscribe(
+        () => {
+          this.alertify.success('Successfully deleted reservation!');
+        }, err => {
+          this.alertify.error(err);
+        }, () => {
+          this.reservationService.getReservations(this.pagination.currentPage, this.pagination.itemsPerPage).subscribe(
+            data => this.reservations = data.result
+          );
+        });
+    }
   }
 
   /*signUp(id) {

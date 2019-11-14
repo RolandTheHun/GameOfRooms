@@ -17,6 +17,8 @@ import { RoomListResolver } from './_resolvers/room-list.resolver';
 import { ConsultantListResolver } from './_resolvers/consultant-list.resolver';
 import { ReservationAddComponent } from './reservations/reservation-add/reservation-add.component';
 import { ReservationAddGuard } from './_guards/reservation-add.guard';
+import { ReservationEditComponent } from './reservations/reservation-edit/reservation-edit.component';
+import { CanActivate } from '@angular/router/src/utils/preactivation';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -53,6 +55,12 @@ export const appRoutes: Routes = [
         path: 'reservations',
         component: ReservationListComponent,
         resolve: { reservations: ReservationListResolver, rooms: RoomListResolver }
+      },
+      {
+        path: 'reservations/edit/:id',
+        component: ReservationEditComponent,
+        resolve: { rooms: RoomListResolver },
+        canActivate: [ReservationAddGuard]
       },
       {
         path: 'reservations/add',

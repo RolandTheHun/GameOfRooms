@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Reservation } from 'src/app/_models/reservation';
 import { Room } from 'src/app/_models/room';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Reservation } from 'src/app/_models/reservation';
 import { AuthService } from 'src/app/_services/auth.service';
-import { Location } from '@angular/common';
 import { ReservationService } from 'src/app/_services/reservation.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-reservation-add',
-  templateUrl: './reservation-add.component.html',
-  styleUrls: ['./reservation-add.component.css']
+  selector: 'app-reservation-edit',
+  templateUrl: './reservation-edit.component.html',
+  styleUrls: ['./reservation-edit.component.css']
 })
-export class ReservationAddComponent implements OnInit {
+export class ReservationEditComponent implements OnInit {
+  editingReservation = this.route.snapshot.paramMap.get('id');
+
   bsConfig: Partial<BsDatepickerConfig>;
   fromTime: Date = new Date();
   untilTime: Date = new Date();
@@ -24,7 +26,6 @@ export class ReservationAddComponent implements OnInit {
 
   rooms: Room[];
   reservations: Reservation[];
-
 
   constructor(
     private fb: FormBuilder,
@@ -41,17 +42,22 @@ export class ReservationAddComponent implements OnInit {
     });
     (this.bsConfig = {
       containerClass: 'theme-blue'
-    }),
-      this.createReservationForm();
+    })//,
+    //this.createReservationForm();
+    this.reservationService.getReservation(this.editingReservation).subscribe(data =>
+      this.reservation = data, err => this.alertify.error(err),
+      () => this.createReservationForm());
   }
 
   createReservationForm() {
     this.reservationForm = this.fb.group({
-      title: ['', Validators.required],
-      summary: ['', Validators.required],
-      ownMachine: [false, Validators.required],
-      roomId: [null, Validators.required]
+      title: [this.reservation.title, Validators.required],
+      summary: [this.reservation.summary, Validators.required],
+      ownMachine: [this.reservation.ownMachine, Validators.required],
+      roomId: [this.reservation.roomId, Validators.required]
     });
+    this.fromTime = this.reservation.from;
+    this.untilTime = this.reservation.until;
   }
 
   goBack() {
@@ -85,7 +91,7 @@ export class ReservationAddComponent implements OnInit {
       this.reservation.until = this.untilTime;
       this.reservationService.getReservations(1, 1000).subscribe(
         s => {
-          this.reservations = s.result.filter(r => r.roomId === +this.reservation.roomId
+          this.reservations = s.result.filter(r => r.id !== +this.route.snapshot.paramMap.get('id') && r.roomId === +this.reservation.roomId
             && new Date(r.from).getDate() === this.reservation.from.getDate()
             && ((new Date(r.from).getTime() <= this.reservation.from.getTime()
               && new Date(r.until).getTime() >= this.reservation.from.getTime())
@@ -93,13 +99,14 @@ export class ReservationAddComponent implements OnInit {
                 && new Date(r.until).getTime() >= this.reservation.until.getTime())
               || (new Date(r.from).getTime() >= this.reservation.from.getTime()
                 && new Date(r.until).getTime() <= this.reservation.until.getTime())));
-        }, err => console.log('Error'), () => {
+        }, err => console.log('Error ' + err), () => {
           if (this.reservations.length !== 0) {
             this.alertify.error('In this timestamp there is already a consultation in this room!');
           } else {
             console.log(this.reservation);
-            this.reservationService.postReservation(this.reservation).subscribe();
-            this.alertify.success('Consultation reservation in progress...');
+            //this.reservationService.postReservation(this.reservation).subscribe();
+            this.reservationService.updateReservationFully(+this.editingReservation, this.reservation).subscribe();
+            this.alertify.success('Consultation update in progress...');
             this.goBack();
           }
         }
