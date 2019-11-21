@@ -49,6 +49,7 @@ import { RatingAddComponent } from './ratings/rating-add/rating-add.component';
 import { ReservationAddComponent } from './reservations/reservation-add/reservation-add.component';
 import { ReservationAddGuard } from './_guards/reservation-add.guard';
 import { ReservationEditComponent } from './reservations/reservation-edit/reservation-edit.component';
+import { DatePipe } from '@angular/common';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -112,7 +113,8 @@ export function tokenGetter() {
     ReservationListResolver,
     RatingListResolver,
     ConsultantListResolver,
-    RoomListResolver
+    RoomListResolver,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

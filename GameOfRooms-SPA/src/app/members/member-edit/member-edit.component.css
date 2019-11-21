@@ -17,3 +17,12 @@
 h4{
   margin-top: 1em;
 }
+
+.fa-star{
+  color: yellow;
+  text-shadow: 0 0 3px #000;
+}
+
+ul{
+  list-style-type: none;
+}

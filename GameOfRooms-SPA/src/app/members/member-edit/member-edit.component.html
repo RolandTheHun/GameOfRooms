@@ -15,8 +15,6 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="card">
-        <!-- <img class="card-img-top img-thumbnail" src="{{ user.photoUrl || '../../../assets/user.png' }}"
-          alt="{{ user.knownAs }}" /> -->
         <div class="card-body">
           <div style="margin-top: 1em;">
             <strong>Name:</strong>
@@ -67,9 +65,35 @@
               </div> -->
             </form>
           </tab>
-          <tab heading="Valami...">
-            <h4>valami</h4>
-            <p>Photo edit goes here...</p>
+          <tab *ngIf="user.userType == 0" heading="Request">
+            <h4 class="text-primary">Request a profile update!</h4>
+            <p>Sending a request to the Administrator of this application to upgrade you to a consultant!</p>
+            <button class="btn btn-primary">Send request</button>
+          </tab>
+          <tab *ngIf="user.userType == 1" heading="My ratings">
+            <h4>Ratings</h4>
+            <ul *ngFor="let item of ratings; let i = index">
+              <li><strong>Stars: </strong><i class="fa fa-star" *ngFor="let icon of [].constructor(item.star)"></i></li>
+              <li><strong>Overall: </strong> {{item.overall}}</li>
+            </ul>
+            <pagination [boundaryLinks]="true" [totalItems]="paginationRatings.totalItems"
+              [(ngModel)]="paginationRatings.currentPage" [itemsPerPage]="paginationRatings.itemsPerPage"
+              (pageChanged)="pageChangedRatings($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+              lastText="&raquo;">
+            </pagination>
+          </tab>
+          <tab *ngIf="user.userType == 2" heading="Change usertype">
+            <h4>Students</h4>
+            <ul *ngFor="let item of students">
+              <li><strong>{{item.familyName}} {{item.firstName}}</strong></li>
+              <li>{{item.email}}</li>
+              <li><button class="btn btn-danger">Update User</button></li>
+            </ul>
+            <pagination [boundaryLinks]="true" [totalItems]="paginationUsers.totalItems"
+              [(ngModel)]="paginationUsers.currentPage" [itemsPerPage]="paginationUsers.itemsPerPage"
+              (pageChanged)="pageChangedUsers($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+              lastText="&raquo;">
+            </pagination>
           </tab>
         </tabset>
       </div>

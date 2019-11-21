@@ -5,7 +5,7 @@ import { Room } from 'src/app/_models/room';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Reservation } from 'src/app/_models/reservation';
 import { AuthService } from 'src/app/_services/auth.service';
-import { Location } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { ReservationService } from 'src/app/_services/reservation.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 
@@ -32,7 +32,8 @@ export class ReservationAddComponent implements OnInit {
     private authService: AuthService,
     private reservationService: ReservationService,
     private alertify: AlertifyService,
-    private location: Router
+    private location: Router,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit() {
@@ -77,12 +78,19 @@ export class ReservationAddComponent implements OnInit {
       this.reservation.roomId = +this.reservationForm.controls['roomId'].value;
       this.fromTime.setMonth(this.myDate.getMonth());
       this.fromTime.setDate(this.myDate.getDate());
+      this.fromTime.setHours(this.fromTime.getHours() + 1);
       this.fromTime.setSeconds(0);
       this.reservation.from = this.fromTime;
       this.untilTime.setMonth(this.myDate.getMonth());
       this.untilTime.setDate(this.myDate.getDate());
+      this.untilTime.setHours(this.untilTime.getHours() + 1);
       this.untilTime.setSeconds(0);
       this.reservation.until = this.untilTime;
+      console.log('From: ' + this.reservation.from.toUTCString());
+      console.log('Until: ' + this.reservation.until);
+      console.log('New From: ' + this.datePipe.transform(this.reservation.from, 'yyyy-MM-dd hh:mm'));
+      // this.reservation.from = new Date(this.datePipe.transform(this.reservation.from, 'yyyy-MM-dd hh:mm'));
+      // this.reservation.until = new Date(this.datePipe.transform(this.reservation.until, 'yyyy-MM-dd hh:mm'));
       this.reservationService.getReservations(1, 1000).subscribe(
         s => {
           this.reservations = s.result.filter(r => r.roomId === +this.reservation.roomId

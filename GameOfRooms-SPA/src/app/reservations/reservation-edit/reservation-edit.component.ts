@@ -83,10 +83,12 @@ export class ReservationEditComponent implements OnInit {
       this.reservation.roomId = +this.reservationForm.controls['roomId'].value;
       this.fromTime.setMonth(this.myDate.getMonth());
       this.fromTime.setDate(this.myDate.getDate());
+      this.fromTime.setHours(this.fromTime.getHours() + 1);
       this.fromTime.setSeconds(0);
       this.reservation.from = this.fromTime;
       this.untilTime.setMonth(this.myDate.getMonth());
       this.untilTime.setDate(this.myDate.getDate());
+      this.untilTime.setHours(this.untilTime.getHours() + 1);
       this.untilTime.setSeconds(0);
       this.reservation.until = this.untilTime;
       this.reservationService.getReservations(1, 1000).subscribe(
