@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable()
 export class ReservationListResolver implements Resolve<Reservation[]>{
     pageNumber = 1;
-    pageSize = 2;
+    pageSize = 5;
 
     constructor(
         private reservationService: ReservationService,

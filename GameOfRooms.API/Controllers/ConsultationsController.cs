@@ -23,5 +23,13 @@ namespace GameOfRooms.API.Controllers
 
             return Ok(consultations);
         }
+
+        [HttpGet("{id}/myConsultation/{consultationId}")]
+        public async Task<IActionResult> GetConsultation(int id, int consultationId)
+        {
+            var consultation = await _repo.GetConsultation(id, consultationId);
+
+            return Ok(consultation);
+        }
     }
 }

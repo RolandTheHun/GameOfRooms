@@ -129,5 +129,29 @@ namespace GameOfRooms.API.Controllers
 
             return BadRequest("Failed to sign up on consultation!");
         }
+
+        [HttpDelete("{id}/deleteConsultation/{reservationId}")]
+        public async Task<IActionResult> SignDown(int id, int reservationId)
+        {
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var consultation = await _repo.GetConsultation(id, reservationId);
+
+            if (consultation == null)
+            {
+                return BadRequest("You did not signed up to sign down from this consultation!");
+            }
+
+            if (await _repo.GetReservation(reservationId) == null)
+                return NotFound();
+
+            _repo.Delete(consultation);
+
+            if (await _repo.SaveAll())
+                return NoContent();
+
+            throw new Exception($"Deleting signUp for {id} on {reservationId} failed on save!");
+        }
     }
 }

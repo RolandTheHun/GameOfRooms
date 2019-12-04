@@ -10,7 +10,6 @@ describe('Login/Logout Test', function () {
 
         cy.get('.ajs-message').contains('You shall not pass!!!').should('be.visible')
         cy.get('.nav-link').should('not.exist')
-        cy.get('.nav-link').should('not.exist')
 
         cy.get('[name="username"]').type('Batman')
         cy.get('[name="password"]').type('password')
@@ -31,7 +30,6 @@ describe('Login/Logout Test', function () {
         cy.wait(3000)
 
         cy.get('.ajs-message').contains('Logged out!').should('be.visible')
-        cy.get('.nav-link').should('not.exist')
         cy.get('.nav-link').should('not.exist')
     })
 })

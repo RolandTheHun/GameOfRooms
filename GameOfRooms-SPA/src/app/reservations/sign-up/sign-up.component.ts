@@ -6,6 +6,7 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 import { ReservationService } from 'src/app/_services/reservation.service';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,6 +15,7 @@ import { map } from 'rxjs/operators';
 })
 export class SignUpComponent implements OnInit {
   @Input() reservation: Reservation;
+  @Input() signedUp: boolean;
 
   constructor(
     private router: Router,
@@ -21,20 +23,57 @@ export class SignUpComponent implements OnInit {
     private authService: AuthService,
     private alertify: AlertifyService,
     private reservationService: ReservationService,
+    private location: Location
   ) { }
 
   ngOnInit() {
   }
 
   checkUser(id: number) {
-    this.userService.getUserType(this.authService.decodedToken.nameid).subscribe(
+    // this.userService.getUserType(this.authService.decodedToken.nameid).subscribe(
+    //   data => {
+    //     if (data === 0) {
+    //       this.signUp(id);
+    //     } else {
+    //       this.alertify.error('Consultants cant sign up for consultations!');
+    //     }
+    //   }, err => this.alertify.error(err)
+    // );
+    if (this.authService.decodedToken.role === 'student') {
+      this.signUp(id);
+    } else {
+      this.alertify.error('Consultants cant sign up for consultations!');
+    }
+  }
+
+  uncheckUser(id: number) {
+    if (this.authService.decodedToken.role === 'student') {
+      this.signDown(id);
+    } else {
+      this.alertify.error('You cant do this!');
+    }
+  }
+
+  signDown(id: number) {
+    this.userService.signDown(this.authService.decodedToken.nameid, id).subscribe(
       data => {
-        if (data === 0) {
-          this.signUp(id);
-        } else {
-          this.alertify.error('Consultants cant sign up for consultations!');
-        }
-      }, err => this.alertify.error(err)
+        this.alertify.success('You have signed down from the consultation!');
+      }, error => this.alertify.error(error),
+      () => {
+        this.reservationService.updateReservation(id, this.reservation.capacity - 1).subscribe(
+          data => {
+            this.alertify.success('Reservation unregistered successfully!');
+            this.router.navigate(['/reservations']);
+          },
+          error => {
+            this.alertify.error(error);
+          }, () => {
+            this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+              this.router.navigate(['/reservations']);
+            });
+          }
+        );
+      }
     );
   }
 
@@ -43,7 +82,6 @@ export class SignUpComponent implements OnInit {
     this.userService.signUp(this.authService.decodedToken.nameid, id).subscribe(
       data => {
         this.alertify.success('You have signed up for the consultation!');
-        this.router.navigate(['/lists']);
       }, error => {
         this.alertify.error(error);
       },
@@ -55,6 +93,10 @@ export class SignUpComponent implements OnInit {
           },
           error => {
             this.alertify.error(error);
+          }, () => {
+            this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+              this.router.navigate(['/reservations']);
+            });
           }
         );
       }

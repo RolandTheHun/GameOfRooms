@@ -57,7 +57,8 @@ namespace GameOfRooms.API.Controllers
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
-                new Claim(ClaimTypes.Name, userFromRepo.Username)
+                new Claim(ClaimTypes.Name, userFromRepo.Username),
+                new Claim(ClaimTypes.Role, userFromRepo.UserType.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8

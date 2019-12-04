@@ -75,6 +75,16 @@ export class UserService {
     return this.http.post(`${this.baseUrl}users/${id}/consultation/${reservationId}`, {});
   }
 
+  //egy felhasználó leiratkozik a konzultációról
+  signDown(id: number, reservationId: number) {
+    return this.http.delete(`${this.baseUrl}users/${id}/deleteConsultation/${reservationId}`, {});
+  }
+
+  //checkIfSignedUp
+  checkSignedUp(id: number, reservationId: number) {
+    return this.http.get<any>(`${this.baseUrl}/consultations/${id}/myConsultation/${reservationId}`);
+  }
+
   // a felhasználó userType értékét adja vissza
   getUserType(id: number): Observable<number> {
     return this.http.get<number>(`${this.baseUrl}users/${id}/userType`);

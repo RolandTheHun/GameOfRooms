@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
     private alertify: AlertifyService,
     private fb: FormBuilder,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     (this.bsConfig = {
@@ -39,12 +39,16 @@ export class RegisterComponent implements OnInit {
   createRegisterForm() {
     this.registerForm = this.fb.group(
       {
-        gender: ['male'],
+        // gender: ['male'],
         username: ['', Validators.required],
-        knownAs: ['', Validators.required],
-        dateOfBirth: [null, Validators.required],
-        city: ['', Validators.required],
-        country: ['', Validators.required],
+        // knownAs: ['', Validators.required],
+        firstName: ['', Validators.required],
+        // dateOfBirth: [null, Validators.required],
+        // city: ['', Validators.required],
+        familyName: ['', Validators.required],
+        // country: ['', Validators.required],
+        email: ['', Validators.required],
+
         password: [
           '',
           [
@@ -66,8 +70,10 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
+    console.log(this.registerForm.value);
     if (this.registerForm.valid) {
       this.user = Object.assign({}, this.registerForm.value);
+      console.log(this.user);
       this.authService.register(this.user).subscribe(
         () => {
           this.alertify.success('Registration successful!');
@@ -77,7 +83,7 @@ export class RegisterComponent implements OnInit {
         },
         () => {
           this.authService.login(this.user).subscribe(() => {
-            this.router.navigate(['/members']);
+            this.router.navigate(['/reservations']);
           });
         }
       );
