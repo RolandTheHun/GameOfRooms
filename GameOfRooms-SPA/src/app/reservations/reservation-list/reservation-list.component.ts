@@ -35,7 +35,6 @@ export class ReservationListComponent implements OnInit {
     private route: ActivatedRoute,
     private reservationService: ReservationService,
     private alertify: AlertifyService,
-    private modalService: BsModalService,
     private fb: FormBuilder,
     private authService: AuthService,
     private userService: UserService
@@ -63,10 +62,6 @@ export class ReservationListComponent implements OnInit {
       data => this.userType = data,
       err => this.alertify.error(err)
     );
-  }
-
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
   }
 
   getRoom(id: number) {
@@ -110,13 +105,4 @@ export class ReservationListComponent implements OnInit {
         });
     }
   }
-
-  /*signUp(id) {
-    if (!this.selectedReservation.capacity)
-      this.selectedReservation.capacity = 0;
-
-    this.selectedReservation.capacity++;
-    console.log(this.selectedReservation.capacity);
-  }*/
-
 }
