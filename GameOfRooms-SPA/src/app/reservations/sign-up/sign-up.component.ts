@@ -29,7 +29,7 @@ export class SignUpComponent implements OnInit {
   ngOnInit() {
   }
 
-  checkUser(id: number) {
+  checkUser(id: number, userId: number) {
     // this.userService.getUserType(this.authService.decodedToken.nameid).subscribe(
     //   data => {
     //     if (data === 0) {
@@ -39,15 +39,17 @@ export class SignUpComponent implements OnInit {
     //     }
     //   }, err => this.alertify.error(err)
     // );
-    if (this.authService.decodedToken.role === 'student') {
+    if (this.authService.decodedToken.role === 'student' || +this.authService.decodedToken.nameid !== +userId) {
       this.signUp(id);
+      console.log(this.authService.decodedToken.nameid);
+      console.log(userId);
     } else {
       this.alertify.error('Consultants cant sign up for consultations!');
     }
   }
 
-  uncheckUser(id: number) {
-    if (this.authService.decodedToken.role === 'student') {
+  uncheckUser(id: number, userId: number) {
+    if (this.authService.decodedToken.role === 'student' || +this.authService.decodedToken.nameid !== +userId) {
       this.signDown(id);
     } else {
       this.alertify.error('You cant do this!');

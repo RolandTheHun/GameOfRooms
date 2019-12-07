@@ -17,7 +17,7 @@
       <tbody>
         <tr (click)="onSelectReservation(reservation)"
           *ngFor="let reservation of reservations | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
-          <th scope="row">{{(pagination.itemsPerPage*pagination.currentPage)+(i-1)}}</th>
+          <th scope="row">{{(pagination.itemsPerPage*pagination.currentPage)+(i-4)}}</th>
           <td>{{reservation.title}}</td>
           <td>{{reservation.from | date: 'shortDate'}}</td>
           <td>{{reservation.from | date: 'shortTime'}}</td>

@@ -67,8 +67,9 @@
           </tab>
           <tab *ngIf="user.userType == 0" heading="Request">
             <h4 class="text-primary">Request a profile update!</h4>
-            <p>Sending a request to the Administrator of this application to upgrade you to a consultant!</p>
-            <button class="btn btn-primary">Send request</button>
+            <p>Sending a request email to the Administrator of this application to upgrade you to a consultant!</p>
+            <button class="btn btn-primary"><a style="text-decoration: none; color: white" href="mailto:roland96@gmail.com?
+              subject=Request%UserType%Update">Send request</a></button>
           </tab>
           <tab *ngIf="user.userType == 1" heading="My ratings">
             <h4>Ratings</h4>
